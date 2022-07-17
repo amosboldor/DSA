@@ -1,0 +1,19 @@
+{
+  "name": "dsa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amosboldor/DSA.git"
+  },
+  "author": "Amos Boldor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amosboldor/DSA/issues"
+  },
+  "homepage": "https://github.com/amosboldor/DSA#readme"
+}
