@@ -1,5 +1,5 @@
 import "jasmine";
-import { hello } from "./helloworld"
+import { hello } from "../src/helloworld"
  
 describe("Test Stuff", function() {
   it("hello function returns world", function() {
