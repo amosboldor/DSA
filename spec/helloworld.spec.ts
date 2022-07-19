@@ -1,4 +1,3 @@
-import "jasmine";
 import { hello } from "../src/helloworld"
  
 describe("Test Stuff", function() {
