@@ -1,4 +1,5 @@
 export default function validAnagram(str1: string, str2:string): boolean {
+    // return true if str1 is an anagram of str2 (& vice versa) otherwiser return false
     if (str1.length === str2.length) {
         const tally1 = new Map<string, number>();
         const tally2 = new Map<string, number>();
