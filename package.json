@@ -2,8 +2,7 @@
   "name": "DSA",
   "private": true,
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Youngling ➡️ Padawan ➡️ Knight ➡️ Jedi Master ⚔️",
   "scripts": {
     "test": "nyc jasmine --config=jasmine.json"
   },
