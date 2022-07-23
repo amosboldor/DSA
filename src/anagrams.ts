@@ -1,11 +1,11 @@
 export default function validAnagram(str1: string, str2:string): boolean {
     // return true if str1 is an anagram of str2 (& vice versa) otherwiser return false
-    if (str1.length === str2.length) {
+    if (str1 && str1.length === str2.length) {
         const tally1 = new Map<string, number>();
         const tally2 = new Map<string, number>();
         for (let i = 0; i < str1.length; i++) {
-            const charKey1 = str1.charAt(i);
-            const charKey2 = str2.charAt(i);
+            const charKey1 = str1.charAt(i).toLowerCase();
+            const charKey2 = str2.charAt(i).toLowerCase();
             const chars1: number | undefined = tally1.get(charKey1);
             const chars2: number | undefined = tally2.get(charKey2);
             if (chars1) {

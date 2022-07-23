@@ -19,4 +19,10 @@ describe("validAnagram returns true if both strings given are anagrams of each o
     it("validAnagram(\"supercalifragilisticexpialidocious\", \"extracellularpacificsoupgodsisiiii\") = true", function(){
         expect(validAnagram("supercalifragilisticexpialidocious", "extracellularpacificsoupgodsisiiii")).toBeTrue();
     });
+    it("validAnagram returns true with mixed case strings given", function(){
+        expect(validAnagram("biGgysmAlLs", "mallBiggySs")).toBeTrue();
+    });
+    it("validAnagram returns false if given an empty string", function(){
+        expect(validAnagram("", "")).toBeFalse();
+    });
 });
