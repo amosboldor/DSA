@@ -35,22 +35,12 @@ class SinglyLinkedList {
         this.size++;
     }
 
-    [Symbol.iterator]() {
+    *[Symbol.iterator]() {
         let curNode: Pointer = this.head;
-        let head = this.head;
-        return {
-            next() {
-                if (curNode !== head) {
-                    curNode = curNode!.next;
-                } else {
-                    curNode = head;
-                }
-                return {
-                    value: curNode,
-                    done: !curNode
-                }
-            }
-        };
+        while (curNode) {
+            yield curNode.data
+            curNode = curNode.next;
+        }
     }
 }
 

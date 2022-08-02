@@ -52,10 +52,10 @@ describe("SinglyLinkedList IS", function(){
         sll.insertTail(2);
         sll.insertTail(3);
         sll.insertTail(4);
-        // let n = 4;
-        // // for (let data in sll) {
-        // //     expect(data).toEqual(n);
-        // //     n--;
-        // // }
+        let n = 1;
+        for (let data of sll) {
+            expect(data).toBe(n);
+            n++;
+        }
     });
 });
