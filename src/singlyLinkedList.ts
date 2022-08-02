@@ -23,6 +23,18 @@ class SinglyLinkedList {
         this.size++;
     }
 
+    insertTail(data: any) {
+        const newNode = new Node(data);
+        if (!this.size) {
+            this.head = newNode;
+            this.tail = newNode;
+        } else {
+            this.tail!.next = newNode;
+            this.tail = newNode;
+        }
+        this.size++;
+    }
+
     delete(data: any): boolean {
         const existsContainsData = (node: Pointer) => node && node.data === data;
         let deleted = false;
@@ -64,18 +76,6 @@ class SinglyLinkedList {
     clear() {
         this.size = 0;
         this.head = this.tail = null;
-    }
-
-    insertTail(data: any) {
-        const newNode = new Node(data);
-        if (!this.size) {
-            this.head = newNode;
-            this.tail = newNode;
-        } else {
-            this.tail!.next = newNode;
-            this.tail = newNode;
-        }
-        this.size++;
     }
 
     *[Symbol.iterator]() {
