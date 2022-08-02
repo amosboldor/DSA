@@ -15,7 +15,7 @@ class SinglyLinkedList {
         if (!this.size) {
             this.head = newNode;
             this.tail = newNode;
-        } else  {
+        } else {
             const tempN = this.head;
             this.head = newNode;
             this.head.next = tempN;
@@ -39,24 +39,24 @@ class SinglyLinkedList {
         const existsContainsData = (node: Pointer) => node && node.data === data;
         let deleted = false;
         if (this.size > 2) {
-            if (this.head!.data === data) {
+            if (existsContainsData(this.head)) {
                 this.head = this.head!.next;
                 deleted = true;
             }
-            let beforeNode: Pointer = this.head!;
-            let nextNode: Pointer = beforeNode.next;
-            while (nextNode) {
+            let beforeNode: Pointer = this.head;
+            let nextNode: Pointer = beforeNode!.next;
+            while (nextNode && beforeNode) {
                 if (existsContainsData(nextNode)) {
                     if (nextNode === this.tail) {
-                        beforeNode!.next = null;
+                        beforeNode.next = null;
                         this.tail = beforeNode;
                     } else {
-                        beforeNode!.next = nextNode!.next;
+                        beforeNode.next = nextNode.next;
                     }
                     deleted = true;
                 }
                 beforeNode = nextNode;
-                nextNode = nextNode!.next;
+                nextNode = nextNode.next;
             }
         } else if (this.size === 2) {
             if (existsContainsData(this.head)) {
