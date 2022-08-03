@@ -59,7 +59,8 @@ class SinglyLinkedList {
 
     deleteTail() {
         this.delHelper(()=>{
-            for (const node of this) {
+            for (const iterit of this) {
+                let node = iterit.node;
                 if (node.next === this.tail) {
                     node.next = null;
                     this.tail = node;
@@ -83,7 +84,8 @@ class SinglyLinkedList {
                 this.head = this.head!.next;
                 deleted = true;
             } else {
-                for (const node of this) {
+                for (const iterit of this) {
+                    const node = iterit.node;
                     if (existsContainsData(node.next)) {
                         if (node.next === this.tail) {
                             node.next = null;
@@ -117,10 +119,20 @@ class SinglyLinkedList {
         this.head = this.tail = null;
     }
 
-    *[Symbol.iterator]() {
+    *[Symbol.iterator](): IterableIterator<{ idx: number; prevNode: Pointer; node: Node; }> {
+        let prevNode: Pointer = null;
         let curNode: Pointer = this.head;
+        let idx = 1;
         while (curNode) {
-            yield curNode
+            yield {
+                idx: idx,
+                prevNode: prevNode,
+                node: curNode
+            };
+            idx++;
+            if (idx !== 1) {
+                prevNode = curNode;
+            }
             curNode = curNode.next;
         }
     }

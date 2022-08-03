@@ -56,7 +56,8 @@ describe("SinglyLinkedList", function(){
     it("is iterable", function(){
         sllInsert(4, "t");
         let n = 1;
-        for (const node of sll) {
+        for (const iterit of sll) {
+            const node = iterit.node;
             expect(node.data).toBe(n);
             n++;
         }
