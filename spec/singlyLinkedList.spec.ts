@@ -85,6 +85,36 @@ describe("SinglyLinkedList", function(){
             expect(sll.tail!.data).toBe(3);
         });
     });
+    describe("insert(idx, data)", function(){
+        it("throws RangeError when index out of range", function(){
+            expect(()=>{sll.insert(10, 1)}).toThrowError(RangeError, "Index out of Range");
+        });
+        it("adds node at index 0(head) when SinglyLinkedList is empty", function(){
+            sll.insert(0, 1);
+            expect(sll.size).toBe(1);
+            expect(sll.head).toBe(sll.tail);
+            expect(sll.head!.data).toBe(1);
+        });
+        it("adds node at index last(tail) when SinglyLinkedList", function(){
+            sllInsert(2, "t");
+            const d = "last";
+            sll.insert(1, d);
+            expect(sll.size).toBe(3);
+            expect(sll.head!.next!.next!.data).toBe(d);
+            expect(sll.tail!.data).toBe(d);
+        });
+        it("adds node at index middle when SinglyLinkedList", function(){
+            sllInsert(5, "t");
+            sll.insert(2, "middle");
+            expect(sll.size).toBe(6);
+            expect(sll.head!.data).toBe(1);
+            expect(sll.head!.next!.data).toBe(2);
+            expect(sll.head!.next!.next!.data).toBe("middle");
+            expect(sll.head!.next!.next!.next!.data).toBe(3);
+            expect(sll.head!.next!.next!.next!.next!.data).toBe(4);
+            expect(sll.tail!.data).toBe(5);
+        });
+    });
     it("is iterable", function(){
         sllInsert(4, "t");
         let n = 1;

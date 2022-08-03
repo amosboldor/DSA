@@ -53,6 +53,28 @@ class SinglyLinkedList {
         this.size++;
     }
 
+    insert(index: number, data: any) {
+        if (index === 0) {
+            // if idx -> first
+            this.insertHead(data);
+        } else if (index >= this.size || index < 0) {
+            throw new RangeError("Index out of Range");
+        } else if (index === this.size - 1) {
+            // if idx -> last
+            this.insertTail(data);
+        } else {
+            // if idx -> middle
+            for (const iterit of this) {
+                if (iterit.idx === index) {
+                    const newNode = new Node(data);
+                    newNode.next = iterit.node;
+                    iterit.prevNode!.next = newNode;
+                    this.size++;
+                }
+            }
+        }
+    }
+
     deleteHead() {
         this.helper({
             if1: ()=>{
