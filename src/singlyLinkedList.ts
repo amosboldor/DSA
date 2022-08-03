@@ -82,21 +82,18 @@ class SinglyLinkedList {
             if (existsContainsData(this.head)) {
                 this.head = this.head!.next;
                 deleted = true;
-            }
-            let beforeNode: Pointer = this.head;
-            let nextNode: Pointer = beforeNode!.next;
-            while (nextNode && beforeNode) {
-                if (existsContainsData(nextNode)) {
-                    if (nextNode === this.tail) {
-                        beforeNode.next = null;
-                        this.tail = beforeNode;
-                    } else {
-                        beforeNode.next = nextNode.next;
+            } else {
+                for (const node of this) {
+                    if (existsContainsData(node.next)) {
+                        if (node.next === this.tail) {
+                            node.next = null;
+                            this.tail = node;
+                        } else {
+                            node.next = node.next!.next;
+                        }
+                        deleted = true;
                     }
-                    deleted = true;
                 }
-                beforeNode = nextNode;
-                nextNode = nextNode.next;
             }
         },()=>{
             if (existsContainsData(this.head)) {
