@@ -1,9 +1,9 @@
 type Pointer = Node | null;
 interface HelperNamedParameters {
-    if0?: Function,
-    if1?: Function,
-    if2?: Function,
-    if3orMr?: Function
+    if0?: Function | null,
+    if1?: Function | null,
+    if2?: Function | null,
+    if3orMr?: Function | null
 }
 
 class Node {
@@ -17,13 +17,13 @@ class SinglyLinkedList {
     public tail: Pointer = null;
 
     private helper = ({if0, if1, if2, if3orMr}: HelperNamedParameters) => {
-        if (this.size === 0 && if0) {
+        if (if0 && this.size === 0) {
             if0();
-        } else if (this.size === 1 && if1) {
+        } else if (if1 && this.size === 1) {
             if1();
-        } else if (this.size === 2 && if2) {
+        } else if (if2 && this.size === 2) {
             if2();
-        } else if (this.size >= 3 && if3orMr) {
+        } else if (if3orMr && this.size >= 3) {
             if3orMr();
         }
     }

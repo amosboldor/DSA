@@ -39,19 +39,51 @@ describe("SinglyLinkedList", function(){
         expect(new SinglyLinkedList().head).toBeNull();
         expect(new SinglyLinkedList().tail).toBeNull();
     });
-    it("insertHead adds node at the head", function(){
-        sllInsert(4, "h");
-        expect(sll.head!.data).toBe(4);
-        expect(sll.head!.next!.data).toBe(3);
-        expect(sll.head!.next!.next!.data).toBe(2);
-        expect(sll.tail!.data).toBe(1);
+    describe("insertHead", function(){
+        it("adds node at the head when SinglyLinkedList is empty", function(){
+            sllInsert(1, "h");
+            expect(sll.size).toBe(1);
+            expect(sll.head).toBe(sll.tail);
+            expect(sll.head!.data).toBe(1);
+        });
+        it("adds node at the head when SinglyLinkedList has one node", function(){
+            sllInsert(2, "h");
+            expect(sll.size).toBe(2);
+            expect(sll.head!.data).toBe(2);
+            expect(sll.head!.next).toBe(sll.tail);
+            expect(sll.tail!.data).toBe(1);
+        });
+        it("adds node at the head when SinglyLinkedList has two(or)more node", function(){
+            sllInsert(3, "h");
+            expect(sll.size).toBe(3);
+            expect(sll.head!.data).toBe(3);
+            expect(sll.head!.next!.data).toBe(2);
+            expect(sll.head!.next!.next).toBe(sll.tail);
+            expect(sll.tail!.data).toBe(1);
+        });
     });
-    it("insertTail adds node at the tail", function(){
-        sllInsert(4, "t");
-        expect(sll.head!.data).toBe(1);
-        expect(sll.head!.next!.data).toBe(2);
-        expect(sll.head!.next!.next!.data).toBe(3);
-        expect(sll.tail!.data).toBe(4);
+    describe("insertTail", function(){
+        it("adds node at the tail when SinglyLinkedList is empty", function(){
+            sllInsert(1, "t");
+            expect(sll.size).toBe(1);
+            expect(sll.tail).toBe(sll.head);
+            expect(sll.tail!.data).toBe(1);
+        });
+        it("adds node at the tail when SinglyLinkedList has one node", function(){
+            sllInsert(2, "t");
+            expect(sll.size).toBe(2);
+            expect(sll.head!.data).toBe(1);
+            expect(sll.head!.next).toBe(sll.tail);
+            expect(sll.tail!.data).toBe(2);
+        });
+        it("adds node at the tail when SinglyLinkedList has two(or)more node", function(){
+            sllInsert(3, "t");
+            expect(sll.size).toBe(3);
+            expect(sll.head!.data).toBe(1);
+            expect(sll.head!.next!.data).toBe(2);
+            expect(sll.head!.next!.next).toBe(sll.tail);
+            expect(sll.tail!.data).toBe(3);
+        });
     });
     it("is iterable", function(){
         sllInsert(4, "t");
