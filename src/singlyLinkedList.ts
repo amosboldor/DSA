@@ -1,4 +1,10 @@
 type Pointer = Node | null;
+interface HelperNamedParameters {
+    if0?: Function,
+    if1?: Function,
+    if2?: Function,
+    if3orMr?: Function
+}
 
 class Node {
     public next: Pointer = null;
@@ -10,13 +16,15 @@ class SinglyLinkedList {
     public head: Pointer = null;
     public tail: Pointer = null;
 
-    private delHelper = (f1: Function, f2: Function, f3: Function) => {
-        if (this.size > 2) {
-            f1();
-        } else if (this.size === 2) {
-            f2();
-        } else {
-            f3();
+    private helper = ({if0, if1, if2, if3orMr}: HelperNamedParameters) => {
+        if (this.size === 0 && if0) {
+            if0();
+        } else if (this.size === 1 && if1) {
+            if1();
+        } else if (this.size === 2 && if2) {
+            if2();
+        } else if (this.size >= 3 && if3orMr) {
+            if3orMr();
         }
     }
 
@@ -46,69 +54,81 @@ class SinglyLinkedList {
     }
 
     deleteHead() {
-        this.delHelper(()=>{
-            this.head = this.head!.next;
-            this.size--;
-        },()=>{
-            this.head = this.tail;
-            this.size--;
-        },()=>{
-            this.clear();
+        this.helper({
+            if1: ()=>{
+                this.clear();
+            },
+            if2: ()=>{
+                this.head = this.tail;
+                this.size--;
+            },
+            if3orMr: ()=>{
+                this.head = this.head!.next;
+                this.size--;
+            }
         });
     }
 
     deleteTail() {
-        this.delHelper(()=>{
-            for (const iterit of this) {
-                let node = iterit.node;
-                if (node.next === this.tail) {
-                    node.next = null;
-                    this.tail = node;
-                    this.size--;
+        this.helper({
+            if1: ()=>{
+                this.clear();
+            },
+            if2: ()=>{
+                this.head!.next = null;
+                this.tail = this.head;
+                this.size--;
+            },
+            if3orMr: ()=>{
+                for (const iterit of this) {
+                    let node = iterit.node;
+                    if (node.next === this.tail) {
+                        node.next = null;
+                        this.tail = node;
+                        this.size--;
+                    }
                 }
             }
-        },()=>{
-            this.head!.next = null;
-            this.tail = this.head;
-            this.size--;
-        },()=>{
-            this.clear();
         });
     }
 
     delete(data: any): boolean {
         const existsContainsData = (node: Pointer) => node && node.data === data;
         let deleted = false;
-        this.delHelper(()=>{
-            if (existsContainsData(this.head)) {
-                this.head = this.head!.next;
-                deleted = true;
-            } else {
-                for (const iterit of this) {
-                    const node = iterit.node;
-                    if (existsContainsData(node.next)) {
-                        if (node.next === this.tail) {
-                            node.next = null;
-                            this.tail = node;
-                        } else {
-                            node.next = node.next!.next;
+        this.helper({
+            if1: ()=>{
+                if (existsContainsData(this.head)) {
+                    this.head = this.tail = null;
+                    deleted = true;
+                }
+            },
+            if2: ()=>{
+                if (existsContainsData(this.head)) {
+                    this.head = this.tail;
+                    deleted = true;
+                } else if (existsContainsData(this.tail)) {
+                    this.tail = this.head;
+                    deleted = true;
+                }
+            },
+            if3orMr: ()=>{
+                if (existsContainsData(this.head)) {
+                    this.head = this.head!.next;
+                    deleted = true;
+                } else {
+                    for (const iterit of this) {
+                        const node = iterit.node;
+                        if (existsContainsData(node.next)) {
+                            if (node.next === this.tail) {
+                                node.next = null;
+                                this.tail = node;
+                            } else {
+                                node.next = node.next!.next;
+                            }
+                            deleted = true;
                         }
-                        deleted = true;
                     }
                 }
-            }
-        },()=>{
-            if (existsContainsData(this.head)) {
-                this.head = this.tail;
-                deleted = true;
-            } else if (existsContainsData(this.tail)) {
-                this.tail = this.head;
-                deleted = true;
-            }
-        },()=>{
-            if (existsContainsData(this.head)) {
-                this.head = this.tail = null;
-                deleted = true;
             }
         });
         return deleted ? Boolean(this.size--) : false;
@@ -122,7 +142,7 @@ class SinglyLinkedList {
     *[Symbol.iterator](): IterableIterator<{ idx: number; prevNode: Pointer; node: Node; }> {
         let prevNode: Pointer = null;
         let curNode: Pointer = this.head;
-        let idx = 1;
+        let idx = 0;
         while (curNode) {
             yield {
                 idx: idx,
@@ -130,7 +150,7 @@ class SinglyLinkedList {
                 node: curNode
             };
             idx++;
-            if (idx !== 1) {
+            if (idx !== 0) {
                 prevNode = curNode;
             }
             curNode = curNode.next;
