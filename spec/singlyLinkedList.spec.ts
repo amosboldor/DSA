@@ -56,8 +56,8 @@ describe("SinglyLinkedList", function(){
     it("is iterable", function(){
         sllInsert(4, "t");
         let n = 1;
-        for (let data of sll) {
-            expect(data).toBe(n);
+        for (const node of sll) {
+            expect(node.data).toBe(n);
             n++;
         }
     });
@@ -69,15 +69,15 @@ describe("SinglyLinkedList", function(){
         expect(sll.tail).toBeNull();
         expect(sll.size).toBe(0);
     });
-    describe("delete method finds/deletes first node matching data and returns deleted(bool)", function(){
-        it("deletes node when only one exists", function(){
+    describe("delete method finds/deletes first node matching data", function(){
+        it("deletes node(head/tail) when only one node exist", function(){
             sll.insertHead(1);
             expect(sll.delete(1)).toBeTrue();
             expect(sll.head).toBeNull();
             expect(sll.tail).toBeNull();
             expect(sll.size).toBe(0);
         });
-        it("deletes node(head) when only two node exists", function(){
+        it("deletes node(head) when only two node exist", function(){
             sllInsert(2, "h");
             expect(sll.delete(2)).toBeTrue();
             expect(sll.head).toBeTruthy();
@@ -86,7 +86,7 @@ describe("SinglyLinkedList", function(){
             expect(sll.head!.data).toBe(1);
             expect(sll.size).toBe(1);
         });
-        it("deletes node(tail) when only two node exists", function(){
+        it("deletes node(tail) when only two node exist", function(){
             sllInsert(2, "h");
             expect(sll.delete(1)).toBeTrue();
             expect(sll.head).toBeTruthy();
@@ -95,7 +95,7 @@ describe("SinglyLinkedList", function(){
             expect(sll.head!.data).toBe(2);
             expect(sll.size).toBe(1);
         });
-        it("returns false and doesn't delete if data asked to delete doesn't exist", function(){
+        it("returns false when doesn't find data to delete", function(){
             sllInsert(2, "h");
             expect(sll.size).toBe(2);
             expect(sll.delete(6)).toBeFalse();
@@ -116,6 +116,54 @@ describe("SinglyLinkedList", function(){
             expect(sll.delete(3)).toBeTrue();
             expect(sll.head!.next!.data).toBe(4);
             expect(sll.head!.next!.next!.data).toBe(2);
+        });
+    });
+    describe("deleteHead deletes node(head)", function(){
+        it("when only one node exist", function(){
+            sllInsert(1, "h");
+            sll.deleteHead();
+            expect(sll.size).toBe(0);
+            expect(sll.head).toBe(sll.tail);
+            expect(sll.head).toBeNull();
+        });
+        it("when only two node exist", function(){
+            sllInsert(2, "h");
+            sll.deleteHead();
+            expect(sll.size).toBe(1);
+            expect(sll.head).toBe(sll.tail);
+            expect(sll.head!.data).toBe(1);
+        });
+        it("when three or more nodes exist", function(){
+            sllInsert(4, "h");
+            sll.deleteHead();
+            expect(sll.size).toBe(3);
+            expect(sll.head!.data).toBe(3);
+            expect(sll.head!.next!.data).toBe(2);
+            expect(sll.tail!.data).toBe(1);
+        });
+    });
+    describe("deleteTail deletes node(tail)", function(){
+        it("when only one node exist", function(){
+            sllInsert(1, "h");
+            sll.deleteTail();
+            expect(sll.size).toBe(0);
+            expect(sll.tail).toBe(sll.head);
+            expect(sll.tail).toBeNull();
+        });
+        it("when only two node exist", function(){
+            sllInsert(2, "h");
+            sll.deleteTail();
+            expect(sll.size).toBe(1);
+            expect(sll.head).toBe(sll.tail);
+            expect(sll.tail!.data).toBe(2);
+        });
+        it("when three or more nodes exist", function(){
+            sllInsert(4, "h");
+            sll.deleteTail();
+            expect(sll.size).toBe(3);
+            expect(sll.head!.data).toBe(4);
+            expect(sll.head!.next!.data).toBe(3);
+            expect(sll.tail!.data).toBe(2);
         });
     });
 });

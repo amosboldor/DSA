@@ -10,6 +10,16 @@ class SinglyLinkedList {
     public head: Pointer = null;
     public tail: Pointer = null;
 
+    private delHelper = (f1: Function, f2: Function, f3: Function) => {
+        if (this.size > 2) {
+            f1();
+        } else if (this.size === 2) {
+            f2();
+        } else {
+            f3();
+        }
+    }
+
     insertHead(data: any) {
         const newNode = new Node(data);
         if (!this.size) {
@@ -35,10 +45,40 @@ class SinglyLinkedList {
         this.size++;
     }
 
+    deleteHead() {
+        this.delHelper(()=>{
+            this.head = this.head!.next;
+            this.size--;
+        },()=>{
+            this.head = this.tail;
+            this.size--;
+        },()=>{
+            this.clear();
+        });
+    }
+
+    deleteTail() {
+        this.delHelper(()=>{
+            for (const node of this) {
+                if (node.next === this.tail) {
+                    node.next = null;
+                    this.tail = node;
+                    this.size--;
+                }
+            }
+        },()=>{
+            this.head!.next = null;
+            this.tail = this.head;
+            this.size--;
+        },()=>{
+            this.clear();
+        });
+    }
+
     delete(data: any): boolean {
         const existsContainsData = (node: Pointer) => node && node.data === data;
         let deleted = false;
-        if (this.size > 2) {
+        this.delHelper(()=>{
             if (existsContainsData(this.head)) {
                 this.head = this.head!.next;
                 deleted = true;
@@ -58,7 +98,7 @@ class SinglyLinkedList {
                 beforeNode = nextNode;
                 nextNode = nextNode.next;
             }
-        } else if (this.size === 2) {
+        },()=>{
             if (existsContainsData(this.head)) {
                 this.head = this.tail;
                 deleted = true;
@@ -66,10 +106,12 @@ class SinglyLinkedList {
                 this.tail = this.head;
                 deleted = true;
             }
-        } else if (this.size === 1 && existsContainsData(this.head)) {
-            this.head = this.tail = null;
-            deleted = true;
-        }
+        },()=>{
+            if (existsContainsData(this.head)) {
+                this.head = this.tail = null;
+                deleted = true;
+            }
+        });
         return deleted ? Boolean(this.size--) : false;
     }
 
@@ -81,7 +123,7 @@ class SinglyLinkedList {
     *[Symbol.iterator]() {
         let curNode: Pointer = this.head;
         while (curNode) {
-            yield curNode.data
+            yield curNode
             curNode = curNode.next;
         }
     }
