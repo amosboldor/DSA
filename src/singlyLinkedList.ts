@@ -1,5 +1,5 @@
 type Pointer = Node | null;
-interface HelperNamedParameters {
+interface IfSizeHelperParam {
     if0?: Function | null,
     if1?: Function | null,
     if2?: Function | null,
@@ -16,7 +16,7 @@ class SinglyLinkedList {
     public head: Pointer = null;
     public tail: Pointer = null;
 
-    private helper = ({if0, if1, if2, if3orMr}: HelperNamedParameters) => {
+    private ifSizeHelper = ({if0, if1, if2, if3orMr}: IfSizeHelperParam) => {
         if (if0 && this.size === 0) {
             if0();
         } else if (if1 && this.size === 1) {
@@ -76,7 +76,7 @@ class SinglyLinkedList {
     }
 
     deleteHead() {
-        this.helper({
+        this.ifSizeHelper({
             if1: ()=>{
                 this.clear();
             },
@@ -92,7 +92,7 @@ class SinglyLinkedList {
     }
 
     deleteTail() {
-        this.helper({
+        this.ifSizeHelper({
             if1: ()=>{
                 this.clear();
             },
@@ -117,7 +117,7 @@ class SinglyLinkedList {
     delete(data: any): boolean {
         const existsContainsData = (node: Pointer) => node && node.data === data;
         let deleted = false;
-        this.helper({
+        this.ifSizeHelper({
             if1: ()=>{
                 if (existsContainsData(this.head)) {
                     this.head = this.tail = null;
