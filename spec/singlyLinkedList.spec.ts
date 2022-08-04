@@ -87,10 +87,10 @@ describe("SinglyLinkedList", function(){
     });
     describe("insert(idx, data)", function(){
         it("throws RangeError when index out of range", function(){
-            expect(()=>{sll.insert(10, 1)}).toThrowError(RangeError, "Index out of Range");
+            expect(()=>{sll.insertIndex(10, 1)}).toThrowError(RangeError, "Index out of Range");
         });
         it("adds node at index 0(head) when SinglyLinkedList is empty", function(){
-            sll.insert(0, 1);
+            sll.insertIndex(0, 1);
             expect(sll.size).toBe(1);
             expect(sll.head).toBe(sll.tail);
             expect(sll.head!.data).toBe(1);
@@ -98,20 +98,49 @@ describe("SinglyLinkedList", function(){
         it("adds node at index last(tail) when SinglyLinkedList", function(){
             sllInsert(2, "t");
             const d = "last";
-            sll.insert(1, d);
+            sll.insertIndex(1, d);
             expect(sll.size).toBe(3);
             expect(sll.head!.next!.next!.data).toBe(d);
             expect(sll.tail!.data).toBe(d);
         });
         it("adds node at index middle when SinglyLinkedList", function(){
             sllInsert(5, "t");
-            sll.insert(2, "middle");
+            sll.insertIndex(2, "middle");
             expect(sll.size).toBe(6);
             expect(sll.head!.data).toBe(1);
             expect(sll.head!.next!.data).toBe(2);
             expect(sll.head!.next!.next!.data).toBe("middle");
             expect(sll.head!.next!.next!.next!.data).toBe(3);
             expect(sll.head!.next!.next!.next!.next!.data).toBe(4);
+            expect(sll.tail!.data).toBe(5);
+        });
+    });
+    describe("deleteIndex", function(){
+        it("throws RangeError when index out of range", function(){
+            expect(()=>{sll.deleteIndex(10)}).toThrowError(RangeError, "Index out of Range");
+        });
+        it("deletes node at index 0(head) when SinglyLinkedList has one node", function(){
+            sllInsert(1, "h");
+            sll.deleteIndex(0);
+            expect(sll.size).toBe(0);
+            expect(sll.head).toBe(sll.tail);
+            expect(sll.head).toBe(null);
+        });
+        it("deletes node at index last(tail) when SinglyLinkedList has at least two nodes", function(){
+            sllInsert(3, "t");
+            sll.deleteIndex(2);
+            expect(sll.size).toBe(2);
+            expect(sll.head!.data).toBe(1);
+            expect(sll.head!.next!.data).toBe(2);
+            expect(sll.tail!.data).toBe(2);
+        });
+        it("deletes node at index middle when SinglyLinkedList", function(){
+            sllInsert(5, "t");
+            sll.deleteIndex(2);
+            expect(sll.size).toBe(4);
+            expect(sll.head!.data).toBe(1);
+            expect(sll.head!.next!.data).toBe(2);
+            expect(sll.head!.next!.next!.data).toBe(4);
             expect(sll.tail!.data).toBe(5);
         });
     });
@@ -132,17 +161,20 @@ describe("SinglyLinkedList", function(){
         expect(sll.tail).toBeNull();
         expect(sll.size).toBe(0);
     });
-    describe("delete method finds/deletes first node matching data", function(){
+    describe("findDelete", function(){
+        it("throws error when empty", function(){
+            expect(()=>{sll.findDelete(1)}).toThrowError("SinglyLinkedList is empty");
+        });
         it("deletes node(head/tail) when only one node exist", function(){
             sll.insertHead(1);
-            expect(sll.delete(1)).toBeTrue();
+            expect(sll.findDelete(1)).toBeTrue();
             expect(sll.head).toBeNull();
             expect(sll.tail).toBeNull();
             expect(sll.size).toBe(0);
         });
         it("deletes node(head) when only two node exist", function(){
             sllInsert(2, "h");
-            expect(sll.delete(2)).toBeTrue();
+            expect(sll.findDelete(2)).toBeTrue();
             expect(sll.head).toBeTruthy();
             expect(sll.tail).toBeTruthy();
             expect(sll.head).toBe(sll.tail);
@@ -151,7 +183,7 @@ describe("SinglyLinkedList", function(){
         });
         it("deletes node(tail) when only two node exist", function(){
             sllInsert(2, "h");
-            expect(sll.delete(1)).toBeTrue();
+            expect(sll.findDelete(1)).toBeTrue();
             expect(sll.head).toBeTruthy();
             expect(sll.tail).toBeTruthy();
             expect(sll.head).toBe(sll.tail)
@@ -161,42 +193,45 @@ describe("SinglyLinkedList", function(){
         it("returns false when doesn't find data to delete", function(){
             sllInsert(2, "h");
             expect(sll.size).toBe(2);
-            expect(sll.delete(6)).toBeFalse();
+            expect(sll.findDelete(6)).toBeFalse();
             expect(sll.size).toBe(2);
         });
         it("deletes node(head) when three or more nodes exist", function(){
             sllInsert(5, "h");
-            expect(sll.delete(5)).toBeTrue();
+            expect(sll.findDelete(5)).toBeTrue();
             expect(sll.head!.data).toBe(4);
         });
         it("deletes node(middle) when three or more nodes exist", function(){
             sllInsert(5, "h");
-            expect(sll.delete(1)).toBeTrue();
+            expect(sll.findDelete(1)).toBeTrue();
             expect(sll.tail!.data).toBe(2);
         });
         it("deletes node(tail) when three or more nodes exist", function(){
             sllInsert(5, "h");
-            expect(sll.delete(3)).toBeTrue();
+            expect(sll.findDelete(3)).toBeTrue();
             expect(sll.head!.next!.data).toBe(4);
             expect(sll.head!.next!.next!.data).toBe(2);
         });
     });
-    describe("deleteHead deletes node(head)", function(){
-        it("when only one node exist", function(){
+    describe("deleteHead", function(){
+        it("throws error when empty", function(){
+            expect(()=>{sll.deleteHead()}).toThrowError("SinglyLinkedList is empty");
+        });
+        it("deletes node(head) when only one node exist", function(){
             sllInsert(1, "h");
             sll.deleteHead();
             expect(sll.size).toBe(0);
             expect(sll.head).toBe(sll.tail);
             expect(sll.head).toBeNull();
         });
-        it("when only two node exist", function(){
+        it("deletes node(head) when only two node exist", function(){
             sllInsert(2, "h");
             sll.deleteHead();
             expect(sll.size).toBe(1);
             expect(sll.head).toBe(sll.tail);
             expect(sll.head!.data).toBe(1);
         });
-        it("when three or more nodes exist", function(){
+        it("deletes node(head) when three or more nodes exist", function(){
             sllInsert(4, "h");
             sll.deleteHead();
             expect(sll.size).toBe(3);
@@ -205,22 +240,25 @@ describe("SinglyLinkedList", function(){
             expect(sll.tail!.data).toBe(1);
         });
     });
-    describe("deleteTail deletes node(tail)", function(){
-        it("when only one node exist", function(){
+    describe("deleteTail", function(){
+        it("throws error when empty", function(){
+            expect(()=>{sll.deleteTail()}).toThrowError("SinglyLinkedList is empty");
+        });
+        it("deletes node(tail) when only one node exist", function(){
             sllInsert(1, "h");
             sll.deleteTail();
             expect(sll.size).toBe(0);
             expect(sll.tail).toBe(sll.head);
             expect(sll.tail).toBeNull();
         });
-        it("when only two node exist", function(){
+        it("deletes node(tail) when only two node exist", function(){
             sllInsert(2, "h");
             sll.deleteTail();
             expect(sll.size).toBe(1);
             expect(sll.head).toBe(sll.tail);
             expect(sll.tail!.data).toBe(2);
         });
-        it("when three or more nodes exist", function(){
+        it("deletes node(tail) when three or more nodes exist", function(){
             sllInsert(4, "h");
             sll.deleteTail();
             expect(sll.size).toBe(3);

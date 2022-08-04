@@ -27,6 +27,12 @@ class SinglyLinkedList {
             if3orMr();
         }
     }
+    private delIf0 = ()=>{
+        throw new Error("SinglyLinkedList is empty");
+    }
+    private delIf1 = ()=>{
+        this.clear();
+    }
 
     insertHead(data: any) {
         const newNode = new Node(data);
@@ -53,7 +59,7 @@ class SinglyLinkedList {
         this.size++;
     }
 
-    insert(index: number, data: any) {
+    insertIndex(index: number, data: any) {
         if (index === 0) {
             // if idx -> first
             this.insertHead(data);
@@ -77,9 +83,8 @@ class SinglyLinkedList {
 
     deleteHead() {
         this.ifSizeHelper({
-            if1: ()=>{
-                this.clear();
-            },
+            if0: this.delIf0,
+            if1: this.delIf1,
             if2: ()=>{
                 this.head = this.tail;
                 this.size--;
@@ -93,9 +98,8 @@ class SinglyLinkedList {
 
     deleteTail() {
         this.ifSizeHelper({
-            if1: ()=>{
-                this.clear();
-            },
+            if0: this.delIf0,
+            if1: this.delIf1,
             if2: ()=>{
                 this.head!.next = null;
                 this.tail = this.head;
@@ -114,10 +118,31 @@ class SinglyLinkedList {
         });
     }
 
-    delete(data: any): boolean {
+    deleteIndex(index: number) {
+        if (index === 0) {
+            // if idx -> first
+            this.deleteHead();
+        } else if (index >= this.size || index < 0) {
+            throw new RangeError("Index out of Range");
+        } else if (index === this.size - 1) {
+            // if idx -> last
+            this.deleteTail();
+        } else {
+            // if idx -> middle
+            for (const iterit of this) {
+                if (iterit.idx === index) {
+                    iterit.prevNode!.next = iterit.node.next;
+                    this.size--;
+                }
+            }
+        }
+    }
+
+    findDelete(data: any): boolean {
         const existsContainsData = (node: Pointer) => node && node.data === data;
         let deleted = false;
         this.ifSizeHelper({
+            if0: this.delIf0,
             if1: ()=>{
                 if (existsContainsData(this.head)) {
                     this.head = this.tail = null;
