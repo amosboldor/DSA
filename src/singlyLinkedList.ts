@@ -119,6 +119,7 @@ class SinglyLinkedList {
     }
 
     deleteIndex(index: number) {
+        this.ifSizeHelper({if0: this.delIf0});
         if (index === 0) {
             // if idx -> first
             this.deleteHead();
@@ -179,6 +180,28 @@ class SinglyLinkedList {
             }
         });
         return deleted ? Boolean(this.size--) : false;
+    }
+
+    atIndex(index: number): Node {
+        this.ifSizeHelper({if0: this.delIf0});
+        let nodeAtIdx: Node;
+        if (index === 0) {
+            // if idx -> first
+            nodeAtIdx = this.head!;
+        } else if (index >= this.size || index < 0) {
+            throw new RangeError("Index out of Range");
+        } else if (index === this.size - 1) {
+            // if idx -> last
+            nodeAtIdx = this.tail!;
+        } else {
+            // if idx -> middle
+            for (const iterit of this) {
+                if (iterit.idx === index) {
+                    nodeAtIdx = iterit.node;
+                }
+            }
+        }
+        return nodeAtIdx!;
     }
 
     clear() {

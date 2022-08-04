@@ -116,7 +116,11 @@ describe("SinglyLinkedList", function(){
         });
     });
     describe("deleteIndex", function(){
+        it("throws error when empty", function(){
+            expect(()=>{sll.deleteIndex(1)}).toThrowError("SinglyLinkedList is empty");
+        });
         it("throws RangeError when index out of range", function(){
+            sll.insertHead(1);
             expect(()=>{sll.deleteIndex(10)}).toThrowError(RangeError, "Index out of Range");
         });
         it("deletes node at index 0(head) when SinglyLinkedList has one node", function(){
@@ -265,6 +269,32 @@ describe("SinglyLinkedList", function(){
             expect(sll.head!.data).toBe(4);
             expect(sll.head!.next!.data).toBe(3);
             expect(sll.tail!.data).toBe(2);
+        });
+    });
+    describe("atIndex", function(){
+        it("throws error when empty", function(){
+            expect(()=>{sll.atIndex(1)}).toThrowError("SinglyLinkedList is empty");
+        });
+        it("throws RangeError when index out of range", function(){
+            sllInsert(3, "h");
+            expect(()=>{sll.atIndex(10)}).toThrowError(RangeError, "Index out of Range");
+        });
+        it("returns node(head) when index 0", function(){
+            sllInsert(3, "h");
+            const theNode = sll.atIndex(0);
+            expect(theNode.data).toBe(3);
+            expect(sll.head).toBe(theNode);
+        });
+        it("returns node(tail) when last index", function(){
+            sllInsert(3, "h");
+            const theNode = sll.atIndex(2);
+            expect(theNode.data).toBe(1);
+            expect(sll.tail).toBe(theNode);
+        });
+        it("returns node(middle) when index middle", function(){
+            sllInsert(5, "h");
+            const theNode = sll.atIndex(2);
+            expect(theNode.data).toBe(3);
         });
     });
 });
