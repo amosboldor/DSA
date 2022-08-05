@@ -237,6 +237,18 @@ class SinglyLinkedList {
             curNode = curNode.next;
         }
     }
+
+    toArray(): any[] {
+        const SLLArray = [];
+        for (const interit of this) {
+            SLLArray.push(interit.node.data);
+        }
+        return SLLArray;
+    }
+
+    log () {
+        console.log(JSON.stringify(this.head, null, 4))
+    }
 }
 
 export { Node, SinglyLinkedList }

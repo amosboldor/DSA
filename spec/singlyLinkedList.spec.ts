@@ -311,4 +311,8 @@ describe("SinglyLinkedList", function(){
             expect(sll.getIndexOf(3)).toBe(4);
         });
     });
+    it("toArray returns array of SinglyLinkedList", function(){
+        sllInsert(3, "t");
+        expect(sll.toArray()).toEqual([1, 2, 3]);
+    });
 });
