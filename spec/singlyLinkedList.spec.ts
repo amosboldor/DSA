@@ -297,4 +297,18 @@ describe("SinglyLinkedList", function(){
             expect(theNode.data).toBe(3);
         });
     });
+    describe("getIndexOf", function(){
+        it("throws error when empty", function(){
+            expect(()=>{sll.getIndexOf(5)}).toThrowError("SinglyLinkedList is empty");
+        });
+        it("returns index -1 not in SinglyLinkedList", function(){
+            sllInsert(7, "h");
+            expect(sll.getIndexOf(8)).toBe(-1);
+        });
+        it("returns index when in SinglyLinkedList",function(){
+            sllInsert(7, "h");
+            expect(sll.getIndexOf(5)).toBe(2);
+            expect(sll.getIndexOf(3)).toBe(4);
+        });
+    });
 });

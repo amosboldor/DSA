@@ -204,6 +204,17 @@ class SinglyLinkedList {
         return nodeAtIdx!;
     }
 
+    getIndexOf(data: any): number {
+        this.ifSizeHelper({if0: this.delIf0});
+        let found = -1;
+        for (const iterit of this) {
+            if (iterit.node.data === data) {
+                found = iterit.idx;
+            }
+        }
+        return found;
+    }
+
     clear() {
         this.size = 0;
         this.head = this.tail = null;
