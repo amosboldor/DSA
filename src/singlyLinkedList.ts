@@ -246,6 +246,7 @@ class SinglyLinkedList {
         return SLLArray;
     }
 
+    /* c8 ignore next 3 */
     log () {
         console.log(JSON.stringify(this.head, null, 4))
     }
