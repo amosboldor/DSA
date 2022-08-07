@@ -1,4 +1,4 @@
-import { Node, SinglyLinkedList } from "../src/singlyLinkedList";
+import { Node, SinglyLinkedList } from "../../src/LinkedList/singlyLinkedList";
 
 describe("Node", function(){
     it("has data property", function(){
