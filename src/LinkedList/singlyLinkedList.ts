@@ -1,7 +1,6 @@
 type Pointer = Node | null;
 interface IfSizeHelperParam {
-    if0?: Function | null,
-    if1?: Function | null,
+    data?: any,
     if2?: Function | null,
     if3orMr?: Function | null
 }
@@ -16,23 +15,46 @@ class SinglyLinkedList {
     public head: Pointer = null;
     public tail: Pointer = null;
 
-    private ifSizeHelper = ({if0, if1, if2, if3orMr}: IfSizeHelperParam) => {
-        if (if0 && this.size === 0) {
-            if0();
-        } else if (if1 && this.size === 1) {
-            if1();
+    private ifSizeHelper({data, if2, if3orMr}: IfSizeHelperParam): boolean {
+        this.ifEmptyThrow();
+        if(this.size === 1) {
+            if (data) {
+                if (this.head!.data === data) {
+                    this.head = this.tail = null;
+                    return true;
+                }
+            } else {
+                this.clear();
+            }
         } else if (if2 && this.size === 2) {
-            if2();
+            return if2();
         } else if (if3orMr && this.size >= 3) {
-            if3orMr();
+            return if3orMr();
+        }
+        return false;
+    }
+
+    private ifEmptyThrow() {
+        if (!this.size) {
+            throw new Error("SinglyLinkedList is empty");
         }
     }
-    private delIf0 = ()=>{
-        throw new Error("SinglyLinkedList is empty");
-    }
-    private delIf1 = ()=>{
-        this.clear();
-    }
+
+    // private delIf0or1(data?: any): boolean {
+    //     this.ifEmptyThrow();
+    //     if(this.size === 1) {
+    //         if (data) {
+    //             if (this.head!.data === data) {
+    //                 this.head = this.tail = null;
+    //                 return true;
+    //             }
+    //         } else {
+    //             this.clear();
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
     insertHead(data: any) {
         const newNode = new Node(data);
@@ -83,8 +105,6 @@ class SinglyLinkedList {
 
     deleteHead() {
         this.ifSizeHelper({
-            if0: this.delIf0,
-            if1: this.delIf1,
             if2: ()=>{
                 this.head = this.tail;
                 this.size--;
@@ -98,8 +118,6 @@ class SinglyLinkedList {
 
     deleteTail() {
         this.ifSizeHelper({
-            if0: this.delIf0,
-            if1: this.delIf1,
             if2: ()=>{
                 this.head!.next = null;
                 this.tail = this.head;
@@ -119,7 +137,7 @@ class SinglyLinkedList {
     }
 
     deleteIndex(index: number) {
-        this.ifSizeHelper({if0: this.delIf0});
+        this.ifEmptyThrow();
         if (index === 0) {
             // if idx -> first
             this.deleteHead();
@@ -141,28 +159,22 @@ class SinglyLinkedList {
 
     findDelete(data: any): boolean {
         const existsContainsData = (node: Pointer) => node && node.data === data;
-        let deleted = false;
-        this.ifSizeHelper({
-            if0: this.delIf0,
-            if1: ()=>{
-                if (existsContainsData(this.head)) {
-                    this.head = this.tail = null;
-                    deleted = true;
-                }
-            },
+        let deleted = this.ifSizeHelper({
+            data: data,
             if2: ()=>{
                 if (existsContainsData(this.head)) {
                     this.head = this.tail;
-                    deleted = true;
+                    return true;
                 } else if (existsContainsData(this.tail)) {
                     this.tail = this.head;
-                    deleted = true;
+                    return true;
                 }
+                return false;
             },
             if3orMr: ()=>{
                 if (existsContainsData(this.head)) {
                     this.head = this.head!.next;
-                    deleted = true;
+                    return true;
                 } else {
                     for (const iterit of this) {
                         const node = iterit.node;
@@ -173,17 +185,18 @@ class SinglyLinkedList {
                             } else {
                                 node.next = node.next!.next;
                             }
-                            deleted = true;
+                            return true;
                         }
                     }
                 }
+                return false;
             }
         });
         return deleted ? Boolean(this.size--) : false;
     }
 
     atIndex(index: number): Node {
-        this.ifSizeHelper({if0: this.delIf0});
+        this.ifEmptyThrow();
         let nodeAtIdx: Node;
         if (index === 0) {
             // if idx -> first
@@ -205,7 +218,7 @@ class SinglyLinkedList {
     }
 
     getIndexOf(data: any): number {
-        this.ifSizeHelper({if0: this.delIf0});
+        this.ifEmptyThrow();
         let found = -1;
         for (const iterit of this) {
             if (iterit.node.data === data) {
