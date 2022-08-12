@@ -194,11 +194,17 @@ describe("SinglyLinkedList", function(){
             expect(sll.head!.data).toBe(2);
             expect(sll.size).toBe(1);
         });
-        it("returns false when doesn't find data to delete", function(){
+        it("returns false when doesn't find data to delete with size 2", function(){
             sllInsert(2, "h");
             expect(sll.size).toBe(2);
             expect(sll.findDelete(6)).toBeFalse();
             expect(sll.size).toBe(2);
+        });
+        it("returns false when doesn't find data to delete with size 3 or more", function(){
+            sllInsert(6, "h");
+            expect(sll.size).toBe(6);
+            expect(sll.findDelete(9)).toBeFalse();
+            expect(sll.size).toBe(6);
         });
         it("deletes node(head) when three or more nodes exist", function(){
             sllInsert(5, "h");
