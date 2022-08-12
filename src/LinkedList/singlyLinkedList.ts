@@ -40,22 +40,6 @@ class SinglyLinkedList {
         }
     }
 
-    // private delIf0or1(data?: any): boolean {
-    //     this.ifEmptyThrow();
-    //     if(this.size === 1) {
-    //         if (data) {
-    //             if (this.head!.data === data) {
-    //                 this.head = this.tail = null;
-    //                 return true;
-    //             }
-    //         } else {
-    //             this.clear();
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
     insertHead(data: any) {
         const newNode = new Node(data);
         if (!this.size) {
