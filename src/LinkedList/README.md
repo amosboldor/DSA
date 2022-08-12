@@ -14,7 +14,7 @@ The simplest of the three; only consists of nodes with only one pointer to the n
 
 I decided to also have a *tail* property on the singlyLinkedList class but, in doing so, created a lot more code complexity than if I just had the *head* property. The benefit is that you can append a node to the end of the list without looping to the second to last O(n) to set the pointer. The drawback might be that you need more space to store the *tail pointer* and more logic for some insert and delete methods to update the *tail pointer* at the right time.
 
-## SinglyLinkedList
+### SinglyLinkedList
 
 **Methods**
 
