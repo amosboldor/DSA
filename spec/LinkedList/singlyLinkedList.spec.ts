@@ -115,24 +115,24 @@ describe("SinglyLinkedList", function(){
             expect(sll.tail!.data).toBe(5);
         });
     });
-    describe("deleteIndex", function(){
+    describe("removeIndex", function(){
         it("throws error when empty", function(){
-            expect(()=>{sll.deleteIndex(1)}).toThrowError("SinglyLinkedList is empty");
+            expect(()=>{sll.removeIndex(1)}).toThrowError("SinglyLinkedList is empty");
         });
         it("throws RangeError when index out of range", function(){
             sll.insertHead(1);
-            expect(()=>{sll.deleteIndex(10)}).toThrowError(RangeError, "Index out of Range");
+            expect(()=>{sll.removeIndex(10)}).toThrowError(RangeError, "Index out of Range");
         });
         it("deletes node at index 0(head) when SinglyLinkedList has one node", function(){
             sllInsert(1, "h");
-            sll.deleteIndex(0);
+            sll.removeIndex(0);
             expect(sll.size).toBe(0);
             expect(sll.head).toBe(sll.tail);
             expect(sll.head).toBe(null);
         });
         it("deletes node at index last(tail) when SinglyLinkedList has at least two nodes", function(){
             sllInsert(3, "t");
-            sll.deleteIndex(2);
+            sll.removeIndex(2);
             expect(sll.size).toBe(2);
             expect(sll.head!.data).toBe(1);
             expect(sll.head!.next!.data).toBe(2);
@@ -140,12 +140,17 @@ describe("SinglyLinkedList", function(){
         });
         it("deletes node at index middle when SinglyLinkedList", function(){
             sllInsert(5, "t");
-            sll.deleteIndex(2);
+            sll.removeIndex(2);
             expect(sll.size).toBe(4);
             expect(sll.head!.data).toBe(1);
             expect(sll.head!.next!.data).toBe(2);
             expect(sll.head!.next!.next!.data).toBe(4);
             expect(sll.tail!.data).toBe(5);
+        });
+        it("deletes and returns node at index", function(){
+            sllInsert(7, "h");
+            expect(sll.removeIndex(3).data).toEqual(4);
+            expect(sll.size).toBe(6);
         });
     });
     it("is iterable", function(){
@@ -223,58 +228,68 @@ describe("SinglyLinkedList", function(){
             expect(sll.head!.next!.next!.data).toBe(2);
         });
     });
-    describe("deleteHead", function(){
+    describe("removeHead", function(){
         it("throws error when empty", function(){
-            expect(()=>{sll.deleteHead()}).toThrowError("SinglyLinkedList is empty");
+            expect(()=>{sll.removeHead()}).toThrowError("SinglyLinkedList is empty");
         });
         it("deletes node(head) when only one node exist", function(){
             sllInsert(1, "h");
-            sll.deleteHead();
+            sll.removeHead();
             expect(sll.size).toBe(0);
             expect(sll.head).toBe(sll.tail);
             expect(sll.head).toBeNull();
         });
         it("deletes node(head) when only two node exist", function(){
             sllInsert(2, "h");
-            sll.deleteHead();
+            sll.removeHead();
             expect(sll.size).toBe(1);
             expect(sll.head).toBe(sll.tail);
             expect(sll.head!.data).toBe(1);
         });
         it("deletes node(head) when three or more nodes exist", function(){
             sllInsert(4, "h");
-            sll.deleteHead();
+            sll.removeHead();
             expect(sll.size).toBe(3);
             expect(sll.head!.data).toBe(3);
             expect(sll.head!.next!.data).toBe(2);
             expect(sll.tail!.data).toBe(1);
         });
+        it("deletes and returns node at index", function(){
+            sllInsert(7, "h");
+            expect(sll.removeHead().data).toEqual(7);
+            expect(sll.size).toBe(6);
+        });
     });
-    describe("deleteTail", function(){
+    describe("removeTail", function(){
         it("throws error when empty", function(){
-            expect(()=>{sll.deleteTail()}).toThrowError("SinglyLinkedList is empty");
+            expect(()=>{sll.removeTail()}).toThrowError("SinglyLinkedList is empty");
         });
         it("deletes node(tail) when only one node exist", function(){
             sllInsert(1, "h");
-            sll.deleteTail();
+            sll.removeTail();
             expect(sll.size).toBe(0);
             expect(sll.tail).toBe(sll.head);
             expect(sll.tail).toBeNull();
         });
         it("deletes node(tail) when only two node exist", function(){
             sllInsert(2, "h");
-            sll.deleteTail();
+            sll.removeTail();
             expect(sll.size).toBe(1);
             expect(sll.head).toBe(sll.tail);
             expect(sll.tail!.data).toBe(2);
         });
         it("deletes node(tail) when three or more nodes exist", function(){
             sllInsert(4, "h");
-            sll.deleteTail();
+            sll.removeTail();
             expect(sll.size).toBe(3);
             expect(sll.head!.data).toBe(4);
             expect(sll.head!.next!.data).toBe(3);
             expect(sll.tail!.data).toBe(2);
+        });
+        it("deletes and returns node at index", function(){
+            sllInsert(7, "h");
+            expect(sll.removeTail().data).toEqual(1);
+            expect(sll.size).toBe(6);
         });
     });
     describe("atIndex", function(){

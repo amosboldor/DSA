@@ -87,7 +87,8 @@ class SinglyLinkedList {
         }
     }
 
-    deleteHead() {
+    removeHead(): Node {
+        const deleted = this.head;
         this.ifSizeHelper({
             if2: ()=>{
                 this.head = this.tail;
@@ -98,9 +99,11 @@ class SinglyLinkedList {
                 this.size--;
             }
         });
+        return deleted!;
     }
 
-    deleteTail() {
+    removeTail(): Node {
+        const deleted = this.tail;
         this.ifSizeHelper({
             if2: ()=>{
                 this.head!.next = null;
@@ -118,27 +121,31 @@ class SinglyLinkedList {
                 }
             }
         });
+        return deleted!;
     }
 
-    deleteIndex(index: number) {
+    removeIndex(index: number): Node {
         this.ifEmptyThrow();
+        let deleted: Node;
         if (index === 0) {
             // if idx -> first
-            this.deleteHead();
+            deleted = this.removeHead();
         } else if (index >= this.size || index < 0) {
             throw new RangeError("Index out of Range");
         } else if (index === this.size - 1) {
             // if idx -> last
-            this.deleteTail();
+            deleted = this.removeTail();
         } else {
             // if idx -> middle
             for (const iterit of this) {
                 if (iterit.idx === index) {
+                    deleted = iterit.node;
                     iterit.prevNode!.next = iterit.node.next;
                     this.size--;
                 }
             }
         }
+        return deleted!;
     }
 
     findDelete(data: any): boolean {
