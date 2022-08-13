@@ -1,19 +1,12 @@
-type Pointer = Node | null;
+import { Nullable, Node, LinkedList } from "./LinkedList";
+
 interface IfSizeHelperParam {
     data?: any,
     if2?: Function | null,
     if3orMr?: Function | null
 }
 
-class Node {
-    public next: Pointer = null;
-    constructor(public data: any) {}
-}
-
-class SinglyLinkedList {
-    public size: number = 0;
-    public head: Pointer = null;
-    public tail: Pointer = null;
+class SinglyLinkedList extends LinkedList {
 
     private ifSizeHelper({data, if2, if3orMr}: IfSizeHelperParam): boolean {
         this.ifEmptyThrow();
@@ -149,7 +142,7 @@ class SinglyLinkedList {
     }
 
     findDelete(data: any): boolean {
-        const existsContainsData = (node: Pointer) => node && node.data === data;
+        const existsContainsData = (node: Nullable<Node>) => node && node.data === data;
         let deleted = this.ifSizeHelper({
             data: data,
             if2: ()=>{
@@ -217,42 +210,6 @@ class SinglyLinkedList {
             }
         }
         return found;
-    }
-
-    clear() {
-        this.size = 0;
-        this.head = this.tail = null;
-    }
-
-    *[Symbol.iterator](): IterableIterator<{ idx: number; prevNode: Pointer; node: Node; }> {
-        let prevNode: Pointer = null;
-        let curNode: Pointer = this.head;
-        let idx = 0;
-        while (curNode) {
-            yield {
-                idx: idx,
-                prevNode: prevNode,
-                node: curNode
-            };
-            idx++;
-            if (idx !== 0) {
-                prevNode = curNode;
-            }
-            curNode = curNode.next;
-        }
-    }
-
-    toArray(): any[] {
-        const SLLArray = [];
-        for (const interit of this) {
-            SLLArray.push(interit.node.data);
-        }
-        return SLLArray;
-    }
-
-    /* c8 ignore next 3 */
-    log () {
-        console.log(JSON.stringify(this.head, null, 4))
     }
 }
 
