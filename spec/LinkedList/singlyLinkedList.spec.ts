@@ -1,23 +1,7 @@
-import { Node, SinglyLinkedList } from "../../src/LinkedList/singlyLinkedList";
-
-describe("Node", function(){
-    it("has data property", function(){
-        expect(new Node(1).data).toBe(1);
-    });
-    it("has null next (node) property", function(){
-        expect(new Node(1).next).toBeNull();
-    });
-    it("has correct Node in next property", function(){
-        const x = new Node(2);
-        const y = new Node(1);
-        y.next = x;
-        expect(y.next).toBeInstanceOf(Node);
-        expect(y.next).toBe(x);
-    });
-});
+import { SinglyLinkedList } from "../../src/LinkedList/singlyLinkedList";
 
 describe("SinglyLinkedList", function(){
-    let sll: SinglyLinkedList;
+    let sll: SinglyLinkedList<any>;
     function sllInsert(n: number, location: "h" | "t") {
         for (let data = 1; data <= n; data++) {
             if (location === "h") {

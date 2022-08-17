@@ -1,14 +1,14 @@
 import { Nullable, Node, LinkedList } from "./LinkedList";
 
-interface IfSizeHelperParam {
-    data?: any,
+interface IfSizeHelperParam<T> {
+    data?: T,
     if2?: Function | null,
     if3orMr?: Function | null
 }
 
-class SinglyLinkedList extends LinkedList {
+class SinglyLinkedList<T> extends LinkedList<T> {
 
-    private ifSizeHelper({data, if2, if3orMr}: IfSizeHelperParam): boolean {
+    private ifSizeHelper({data, if2, if3orMr}: IfSizeHelperParam<T>): boolean {
         this.ifEmptyThrow();
         if(this.size === 1) {
             if (data) {
@@ -33,8 +33,8 @@ class SinglyLinkedList extends LinkedList {
         }
     }
 
-    insertHead(data: any) {
-        const newNode = new Node(data);
+    insertHead(data: T) {
+        const newNode = new Node<T>(data);
         if (!this.size) {
             this.head = newNode;
             this.tail = newNode;
@@ -46,8 +46,8 @@ class SinglyLinkedList extends LinkedList {
         this.size++;
     }
 
-    insertTail(data: any) {
-        const newNode = new Node(data);
+    insertTail(data: T) {
+        const newNode = new Node<T>(data);
         if (!this.size) {
             this.head = newNode;
             this.tail = newNode;
@@ -58,7 +58,7 @@ class SinglyLinkedList extends LinkedList {
         this.size++;
     }
 
-    insertIndex(index: number, data: any) {
+    insertIndex(index: number, data: T) {
         if (index === 0) {
             // if idx -> first
             this.insertHead(data);
@@ -71,7 +71,7 @@ class SinglyLinkedList extends LinkedList {
             // if idx -> middle
             for (const iterit of this) {
                 if (iterit.idx === index) {
-                    const newNode = new Node(data);
+                    const newNode = new Node<T>(data);
                     newNode.next = iterit.node;
                     iterit.prevNode!.next = newNode;
                     this.size++;
@@ -80,7 +80,7 @@ class SinglyLinkedList extends LinkedList {
         }
     }
 
-    removeHead(): Node {
+    removeHead(): Node<T> {
         const deleted = this.head;
         this.ifSizeHelper({
             if2: ()=>{
@@ -95,7 +95,7 @@ class SinglyLinkedList extends LinkedList {
         return deleted!;
     }
 
-    removeTail(): Node {
+    removeTail(): Node<T> {
         const deleted = this.tail;
         this.ifSizeHelper({
             if2: ()=>{
@@ -117,9 +117,9 @@ class SinglyLinkedList extends LinkedList {
         return deleted!;
     }
 
-    removeIndex(index: number): Node {
+    removeIndex(index: number): Node<T> {
         this.ifEmptyThrow();
-        let deleted: Node;
+        let deleted: Node<T>;
         if (index === 0) {
             // if idx -> first
             deleted = this.removeHead();
@@ -141,8 +141,8 @@ class SinglyLinkedList extends LinkedList {
         return deleted!;
     }
 
-    findDelete(data: any): boolean {
-        const existsContainsData = (node: Nullable<Node>) => node && node.data === data;
+    findDelete(data: T): boolean {
+        const existsContainsData = (node: Nullable<Node<T>>) => node && node.data === data;
         let deleted = this.ifSizeHelper({
             data: data,
             if2: ()=>{
@@ -179,9 +179,9 @@ class SinglyLinkedList extends LinkedList {
         return deleted ? Boolean(this.size--) : false;
     }
 
-    atIndex(index: number): Node {
+    atIndex(index: number): Node<T> {
         this.ifEmptyThrow();
-        let nodeAtIdx: Node;
+        let nodeAtIdx: Node<T>;
         if (index === 0) {
             // if idx -> first
             nodeAtIdx = this.head!;
@@ -201,7 +201,7 @@ class SinglyLinkedList extends LinkedList {
         return nodeAtIdx!;
     }
 
-    getIndexOf(data: any): number {
+    getIndexOf(data: T): number {
         this.ifEmptyThrow();
         let found = -1;
         for (const iterit of this) {
@@ -213,4 +213,4 @@ class SinglyLinkedList extends LinkedList {
     }
 }
 
-export { Node, SinglyLinkedList }
+export { SinglyLinkedList }

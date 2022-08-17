@@ -1,19 +1,19 @@
 type Nullable<T> = T | null;
 
-class Node {
-    public next: Nullable<Node> = null;
-    constructor(public data: any) {}
+class Node<T> {
+    public next: Nullable<Node<T>> = null;
+    constructor(public data: T) {}
 }
 
-class TwoWayNode extends Node {
-    public override next: Nullable<TwoWayNode> = null;
-    public preceding: Nullable<TwoWayNode> = null;
+class TwoWayNode<T> extends Node<T> {
+    public override next: Nullable<TwoWayNode<T>> = null;
+    public preceding: Nullable<TwoWayNode<T>> = null;
 }
 
-class LinkedList {
+class LinkedList<T> {
     public size: number = 0;
-    public head: Nullable<Node> = null;
-    public tail: Nullable<Node> = null;
+    public head: Nullable<Node<T>> = null;
+    public tail: Nullable<Node<T>> = null;
 
     /* c8 ignore next 3 */
     log () {
@@ -25,7 +25,7 @@ class LinkedList {
         this.head = this.tail = null;
     }
 
-    *[Symbol.iterator](): IterableIterator<{ idx: number; prevNode: Nullable<Node | TwoWayNode>; node: Node; }> {
+    *[Symbol.iterator](): IterableIterator<{ idx: number; prevNode: Nullable<Node<T> | TwoWayNode<T>>; node: Node<T> | TwoWayNode<T>; }> {
         let prevNode = null;
         let curNode = this.head;
         let idx = 0;
@@ -52,9 +52,4 @@ class LinkedList {
     }
 }
 
-class TwoWayLinkedList extends LinkedList {
-    public override head: Nullable<TwoWayNode> = null;
-    public override tail: Nullable<TwoWayNode> = null;
-}
-
-export { Nullable, Node, TwoWayNode, LinkedList, TwoWayLinkedList }
+export { Nullable, Node, TwoWayNode, LinkedList }
