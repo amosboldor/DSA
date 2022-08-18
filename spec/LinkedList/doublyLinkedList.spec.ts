@@ -69,4 +69,12 @@ describe("DoublyLinkedList", function(){
             expect(dll.tail!.data).toBe(3);
         });
     });
+    it("is (for...of) Iterable", function(){
+        const xa = [];
+        dllInsert(5, "t");
+        for (const interit of dll) {
+            xa.push(interit.node.data);
+        }
+        expect(xa).toEqual([1,2,3,4,5]);
+    });
 });
