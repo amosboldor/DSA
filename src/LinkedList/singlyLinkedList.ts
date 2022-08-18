@@ -33,6 +33,11 @@ class SinglyLinkedList<T> extends LinkedList<T> {
         }
     }
 
+    /* c8 ignore next 3 */
+    log () {
+        console.log(JSON.stringify(this.head, null, 4))
+    }
+
     insertHead(data: T) {
         const newNode = new Node<T>(data);
         if (!this.size) {

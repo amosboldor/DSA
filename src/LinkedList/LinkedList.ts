@@ -15,11 +15,6 @@ class LinkedList<T> {
     public head: Nullable<Node<T>> = null;
     public tail: Nullable<Node<T>> = null;
 
-    /* c8 ignore next 3 */
-    log () {
-        console.log(JSON.stringify(this.head, null, 4))
-    }
-
     clear() {
         this.size = 0;
         this.head = this.tail = null;
