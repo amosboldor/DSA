@@ -7,7 +7,7 @@ class Node<T> {
 
 class TwoWayNode<T> extends Node<T> {
     public override next: Nullable<TwoWayNode<T>> = null;
-    public preceding: Nullable<TwoWayNode<T>> = null;
+    public prev: Nullable<TwoWayNode<T>> = null;
 }
 
 class LinkedList<T> {
