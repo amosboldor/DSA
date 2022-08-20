@@ -1,8 +1,6 @@
 import { Nullable, TwoWayNode, LinkedList } from "./LinkedList";
 
-class DoublyLinkedList<T> extends LinkedList<T> {
-    public override head: Nullable<TwoWayNode<T>> = null;
-    public override tail: Nullable<TwoWayNode<T>> = null;
+class DoublyLinkedList<T> extends LinkedList<TwoWayNode<T>> {
 
     insertHead(data: T) {
         const newNode = new TwoWayNode<T>(data);
@@ -30,6 +28,25 @@ class DoublyLinkedList<T> extends LinkedList<T> {
             this.tail = newNode;
         }
         this.size++;
+    }
+
+    *[Symbol.iterator](): IterableIterator<{
+        idx: number;
+        prev: Nullable<TwoWayNode<T>>;
+        current: TwoWayNode<T>;
+        next: Nullable<TwoWayNode<T>>;
+    }> {
+        let curNode = this.head;
+        let idx = 0;
+        while (curNode) {
+            yield {
+                idx: idx++,
+                prev: curNode!.prev,
+                current: curNode,
+                next: curNode!.next
+            };
+            curNode = curNode.next;
+        }
     }
 }
 

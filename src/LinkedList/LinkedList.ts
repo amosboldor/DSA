@@ -10,10 +10,10 @@ class TwoWayNode<T> extends Node<T> {
     public prev: Nullable<TwoWayNode<T>> = null;
 }
 
-class LinkedList<T> {
+class LinkedList<TNODE> {
     public size: number = 0;
-    public head: Nullable<Node<T>> = null;
-    public tail: Nullable<Node<T>> = null;
+    public head: Nullable<TNODE> = null;
+    public tail: Nullable<TNODE> = null;
 
     clear() {
         this.size = 0;

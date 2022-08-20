@@ -73,7 +73,7 @@ describe("DoublyLinkedList", function(){
         const xa = [];
         dllInsert(5, "t");
         for (const interit of dll) {
-            xa.push(interit.node.data);
+            xa.push(interit.current.data);
         }
         expect(xa).toEqual([1,2,3,4,5]);
     });
