@@ -1,7 +1,7 @@
 import { DoublyLinkedList } from "../../src/LinkedList/doublyLinkedList";
 
 describe("DoublyLinkedList", function(){
-    let dll: DoublyLinkedList<any>;
+    let dll: DoublyLinkedList;
     function dllInsert(n: number, location: "h" | "t") {
         for (let data = 1; data <= n; data++) {
             if (location === "h") {

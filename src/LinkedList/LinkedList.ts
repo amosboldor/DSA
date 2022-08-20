@@ -27,7 +27,7 @@ abstract class LinkedList<T, TNODE extends { next: Nullable<TwoWayNode<T> | Node
         next: Nullable<TNODE>;
     }>;
 
-    toArray(): any[] {
+    toArray(): T[] {
         const LinkedListArray = [];
         for (const interit of this) {
             LinkedListArray.push(interit.current.data);

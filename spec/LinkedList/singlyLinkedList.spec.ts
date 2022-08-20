@@ -1,7 +1,7 @@
 import { SinglyLinkedList } from "../../src/LinkedList/singlyLinkedList";
 
 describe("SinglyLinkedList", function(){
-    let sll: SinglyLinkedList<any>;
+    let sll: SinglyLinkedList;
     function sllInsert(n: number, location: "h" | "t") {
         for (let data = 1; data <= n; data++) {
             if (location === "h") {

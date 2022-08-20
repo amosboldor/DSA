@@ -1,6 +1,6 @@
 import { TwoWayNode, LinkedList } from "./LinkedList";
 
-class DoublyLinkedList<T> extends LinkedList<T, TwoWayNode<T>> {
+class DoublyLinkedList<T = any> extends LinkedList<T, TwoWayNode<T>> {
 
     insertHead(data: T) {
         const newNode = new TwoWayNode<T>(data);

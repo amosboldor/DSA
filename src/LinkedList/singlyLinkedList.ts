@@ -6,7 +6,7 @@ interface IfSizeHelperParam<T> {
     if3orMr?: Function | null
 }
 
-class SinglyLinkedList<T> extends LinkedList<T, Node<T>> {
+class SinglyLinkedList<T = any> extends LinkedList<T, Node<T>> {
 
     private ifSizeHelper({data, if2, if3orMr}: IfSizeHelperParam<T>): boolean {
         this.ifEmptyThrow();
