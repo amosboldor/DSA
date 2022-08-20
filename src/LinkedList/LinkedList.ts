@@ -19,32 +19,6 @@ class LinkedList<T> {
         this.size = 0;
         this.head = this.tail = null;
     }
-
-    *[Symbol.iterator](): IterableIterator<{ idx: number; prevNode: Nullable<Node<T> | TwoWayNode<T>>; node: Node<T> | TwoWayNode<T>; }> {
-        let prevNode = null;
-        let curNode = this.head;
-        let idx = 0;
-        while (curNode) {
-            yield {
-                idx: idx,
-                prevNode: prevNode,
-                node: curNode
-            };
-            idx++;
-            if (idx !== 0) {
-                prevNode = curNode;
-            }
-            curNode = curNode.next;
-        }
-    }
-
-    toArray(): any[] {
-        const LinkedListArray = [];
-        for (const interit of this) {
-            LinkedListArray.push(interit.node.data);
-        }
-        return LinkedListArray;
-    }
 }
 
 export { Nullable, Node, TwoWayNode, LinkedList }

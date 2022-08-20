@@ -33,11 +33,6 @@ class SinglyLinkedList<T> extends LinkedList<T> {
         }
     }
 
-    /* c8 ignore next 3 */
-    log () {
-        console.log(JSON.stringify(this.head, null, 4))
-    }
-
     insertHead(data: T) {
         const newNode = new Node<T>(data);
         if (!this.size) {
@@ -215,6 +210,36 @@ class SinglyLinkedList<T> extends LinkedList<T> {
             }
         }
         return found;
+    }
+
+    *[Symbol.iterator](): IterableIterator<{
+        idx: number;
+        prevNode: Nullable<Node<T>>;
+        node: Node<T>;
+    }> {
+        let prevNode = null;
+        let curNode = this.head;
+        let idx = 0;
+        while (curNode) {
+            yield {
+                idx: idx,
+                prevNode: prevNode,
+                node: curNode
+            };
+            idx++;
+            if (idx !== 0) {
+                prevNode = curNode;
+            }
+            curNode = curNode.next;
+        }
+    }
+
+    toArray(): any[] {
+        const LinkedListArray = [];
+        for (const interit of this) {
+            LinkedListArray.push(interit.node!.data);
+        }
+        return LinkedListArray;
     }
 }
 
