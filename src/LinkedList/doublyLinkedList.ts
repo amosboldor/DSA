@@ -1,6 +1,6 @@
-import { Nullable, TwoWayNode, LinkedList } from "./LinkedList";
+import { TwoWayNode, LinkedList } from "./LinkedList";
 
-class DoublyLinkedList<T> extends LinkedList<TwoWayNode<T>> {
+class DoublyLinkedList<T> extends LinkedList<T, TwoWayNode<T>> {
 
     insertHead(data: T) {
         const newNode = new TwoWayNode<T>(data);
@@ -30,12 +30,7 @@ class DoublyLinkedList<T> extends LinkedList<TwoWayNode<T>> {
         this.size++;
     }
 
-    *[Symbol.iterator](): IterableIterator<{
-        idx: number;
-        prev: Nullable<TwoWayNode<T>>;
-        current: TwoWayNode<T>;
-        next: Nullable<TwoWayNode<T>>;
-    }> {
+    *[Symbol.iterator]() {
         let curNode = this.head;
         let idx = 0;
         while (curNode) {

@@ -6,7 +6,7 @@ interface IfSizeHelperParam<T> {
     if3orMr?: Function | null
 }
 
-class SinglyLinkedList<T> extends LinkedList<Node<T>> {
+class SinglyLinkedList<T> extends LinkedList<T, Node<T>> {
 
     private ifSizeHelper({data, if2, if3orMr}: IfSizeHelperParam<T>): boolean {
         this.ifEmptyThrow();
@@ -72,8 +72,8 @@ class SinglyLinkedList<T> extends LinkedList<Node<T>> {
             for (const iterit of this) {
                 if (iterit.idx === index) {
                     const newNode = new Node<T>(data);
-                    newNode.next = iterit.node;
-                    iterit.prevNode!.next = newNode;
+                    newNode.next = iterit.current;
+                    iterit.prev!.next = newNode;
                     this.size++;
                 }
             }
@@ -105,7 +105,7 @@ class SinglyLinkedList<T> extends LinkedList<Node<T>> {
             },
             if3orMr: ()=>{
                 for (const iterit of this) {
-                    let node = iterit.node;
+                    let node = iterit.current;
                     if (node.next === this.tail) {
                         node.next = null;
                         this.tail = node;
@@ -132,8 +132,8 @@ class SinglyLinkedList<T> extends LinkedList<Node<T>> {
             // if idx -> middle
             for (const iterit of this) {
                 if (iterit.idx === index) {
-                    deleted = iterit.node;
-                    iterit.prevNode!.next = iterit.node.next;
+                    deleted = iterit.current;
+                    iterit.prev!.next = iterit.current.next;
                     this.size--;
                 }
             }
@@ -161,7 +161,7 @@ class SinglyLinkedList<T> extends LinkedList<Node<T>> {
                     return true;
                 } else {
                     for (const iterit of this) {
-                        const node = iterit.node;
+                        const node = iterit.current;
                         if (existsContainsData(node.next)) {
                             if (node.next === this.tail) {
                                 node.next = null;
@@ -194,7 +194,7 @@ class SinglyLinkedList<T> extends LinkedList<Node<T>> {
             // if idx -> middle
             for (const iterit of this) {
                 if (iterit.idx === index) {
-                    nodeAtIdx = iterit.node;
+                    nodeAtIdx = iterit.current;
                 }
             }
         }
@@ -205,41 +205,29 @@ class SinglyLinkedList<T> extends LinkedList<Node<T>> {
         this.ifEmptyThrow();
         let found = -1;
         for (const iterit of this) {
-            if (iterit.node.data === data) {
+            if (iterit.current.data === data) {
                 found = iterit.idx;
             }
         }
         return found;
     }
 
-    *[Symbol.iterator](): IterableIterator<{
-        idx: number;
-        prevNode: Nullable<Node<T>>;
-        node: Node<T>;
-    }> {
-        let prevNode = null;
+    *[Symbol.iterator]() {
+        let prev = null;
         let curNode = this.head;
         let idx = 0;
         while (curNode) {
             yield {
-                idx: idx,
-                prevNode: prevNode,
-                node: curNode
+                idx: idx++,
+                prev: prev,
+                current: curNode,
+                next: curNode.next
             };
-            idx++;
             if (idx !== 0) {
-                prevNode = curNode;
+                prev = curNode;
             }
             curNode = curNode.next;
         }
-    }
-
-    toArray(): any[] {
-        const LinkedListArray = [];
-        for (const interit of this) {
-            LinkedListArray.push(interit.node!.data);
-        }
-        return LinkedListArray;
     }
 }
 

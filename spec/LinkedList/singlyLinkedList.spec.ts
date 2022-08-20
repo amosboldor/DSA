@@ -141,7 +141,7 @@ describe("SinglyLinkedList", function(){
         sllInsert(4, "t");
         let n = 1;
         for (const iterit of sll) {
-            const node = iterit.node;
+            const node = iterit.current;
             expect(node.data).toBe(n);
             n++;
         }
