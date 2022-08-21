@@ -218,30 +218,25 @@ describe("SinglyLinkedList", function(){
         });
         it("deletes node(head) when only one node exist", function(){
             sllInsert(1, "h");
-            sll.removeHead();
+            expect(sll.removeHead().data).toBe(1);
             expect(sll.size).toBe(0);
             expect(sll.head).toBe(sll.tail);
             expect(sll.head).toBeNull();
         });
         it("deletes node(head) when only two node exist", function(){
             sllInsert(2, "h");
-            sll.removeHead();
+            expect(sll.removeHead().data).toBe(2)
             expect(sll.size).toBe(1);
             expect(sll.head).toBe(sll.tail);
             expect(sll.head!.data).toBe(1);
         });
         it("deletes node(head) when three or more nodes exist", function(){
             sllInsert(4, "h");
-            sll.removeHead();
+            expect(sll.removeHead().data).toBe(4);
             expect(sll.size).toBe(3);
             expect(sll.head!.data).toBe(3);
             expect(sll.head!.next!.data).toBe(2);
             expect(sll.tail!.data).toBe(1);
-        });
-        it("deletes and returns node at index", function(){
-            sllInsert(7, "h");
-            expect(sll.removeHead().data).toEqual(7);
-            expect(sll.size).toBe(6);
         });
     });
     describe("removeTail", function(){
@@ -250,30 +245,25 @@ describe("SinglyLinkedList", function(){
         });
         it("deletes node(tail) when only one node exist", function(){
             sllInsert(1, "h");
-            sll.removeTail();
+            expect(sll.removeTail().data).toBe(1);
             expect(sll.size).toBe(0);
             expect(sll.tail).toBe(sll.head);
             expect(sll.tail).toBeNull();
         });
         it("deletes node(tail) when only two node exist", function(){
             sllInsert(2, "h");
-            sll.removeTail();
+            expect(sll.removeTail().data).toBe(1);
             expect(sll.size).toBe(1);
             expect(sll.head).toBe(sll.tail);
             expect(sll.tail!.data).toBe(2);
         });
         it("deletes node(tail) when three or more nodes exist", function(){
             sllInsert(4, "h");
-            sll.removeTail();
+            expect(sll.removeTail().data).toBe(1);
             expect(sll.size).toBe(3);
             expect(sll.head!.data).toBe(4);
             expect(sll.head!.next!.data).toBe(3);
             expect(sll.tail!.data).toBe(2);
-        });
-        it("deletes and returns node at index", function(){
-            sllInsert(7, "h");
-            expect(sll.removeTail().data).toEqual(1);
-            expect(sll.size).toBe(6);
         });
     });
     describe("atIndex", function(){
