@@ -42,7 +42,7 @@ abstract class LinkedList<T, TNODE extends { next: Nullable<TwoWayNode<T> | Node
 
     protected ifEmptyThrow() {
         if (!this.size) {
-            throw new Error("SinglyLinkedList is empty");
+            throw new Error(`${this.constructor['name']} is empty`);
         }
     }
 
