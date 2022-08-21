@@ -1,37 +1,6 @@
 import { Nullable, Node, LinkedList } from "./LinkedList";
 
-interface IfSizeHelperParam<T> {
-    data?: T,
-    if2?: Function | null,
-    if3orMr?: Function | null
-}
-
 class SinglyLinkedList<T = any> extends LinkedList<T, Node<T>> {
-
-    private ifSizeHelper({data, if2, if3orMr}: IfSizeHelperParam<T>): boolean {
-        this.ifEmptyThrow();
-        if(this.size === 1) {
-            if (data) {
-                if (this.head!.data === data) {
-                    this.head = this.tail = null;
-                    return true;
-                }
-            } else {
-                this.clear();
-            }
-        } else if (if2 && this.size === 2) {
-            return if2();
-        } else if (if3orMr && this.size >= 3) {
-            return if3orMr();
-        }
-        return false;
-    }
-
-    private ifEmptyThrow() {
-        if (!this.size) {
-            throw new Error("SinglyLinkedList is empty");
-        }
-    }
 
     insertHead(data: T) {
         const newNode = new Node<T>(data);
@@ -82,7 +51,7 @@ class SinglyLinkedList<T = any> extends LinkedList<T, Node<T>> {
 
     removeHead(): Node<T> {
         const deleted = this.head;
-        this.ifSizeHelper({
+        this.ifSizeDelHelper({
             if2: ()=>{
                 this.head = this.tail;
                 this.size--;
@@ -97,7 +66,7 @@ class SinglyLinkedList<T = any> extends LinkedList<T, Node<T>> {
 
     removeTail(): Node<T> {
         const deleted = this.tail;
-        this.ifSizeHelper({
+        this.ifSizeDelHelper({
             if2: ()=>{
                 this.head!.next = null;
                 this.tail = this.head;
@@ -143,7 +112,7 @@ class SinglyLinkedList<T = any> extends LinkedList<T, Node<T>> {
 
     findDelete(data: T): boolean {
         const existsContainsData = (node: Nullable<Node<T>>) => node && node.data === data;
-        let deleted = this.ifSizeHelper({
+        let deleted = this.ifSizeDelHelper({
             data: data,
             if2: ()=>{
                 if (existsContainsData(this.head)) {

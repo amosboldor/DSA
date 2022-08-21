@@ -10,10 +10,41 @@ class TwoWayNode<T> extends Node<T> {
     public prev: Nullable<TwoWayNode<T>> = null;
 }
 
+interface IfSizeDelHelperParam<T> {
+    data?: T,
+    if2?: Function | null,
+    if3orMr?: Function | null
+}
+
 abstract class LinkedList<T, TNODE extends { next: Nullable<TwoWayNode<T> | Node<T>>, prev?: Nullable<TwoWayNode<T> | Node<T>>, data: T }> {
     public size: number = 0;
     public head: Nullable<TNODE> = null;
     public tail: Nullable<TNODE> = null;
+
+    protected ifSizeDelHelper({data, if2, if3orMr}: IfSizeDelHelperParam<T>): boolean {
+        this.ifEmptyThrow();
+        if(this.size === 1) {
+            if (data) {
+                if (this.head!.data === data) {
+                    this.head = this.tail = null;
+                    return true;
+                }
+            } else {
+                this.clear();
+            }
+        } else if (if2 && this.size === 2) {
+            return if2();
+        } else if (if3orMr && this.size >= 3) {
+            return if3orMr();
+        }
+        return false;
+    }
+
+    protected ifEmptyThrow() {
+        if (!this.size) {
+            throw new Error("SinglyLinkedList is empty");
+        }
+    }
 
     clear() {
         this.size = 0;
