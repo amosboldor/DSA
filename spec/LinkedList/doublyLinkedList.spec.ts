@@ -66,6 +66,7 @@ describe("DoublyLinkedList", function(){
             expect(dll.head!.next!.data).toBe(2);
             expect(dll.head!.next!.next).toBe(dll.tail);
             expect(dll.tail!.prev!.prev).toBe(dll.head);
+            expect(dll.tail!.prev!.data).toBe(2);
             expect(dll.tail!.data).toBe(3);
         });
     });
@@ -76,5 +77,45 @@ describe("DoublyLinkedList", function(){
             xa.push(interit.current.data);
         }
         expect(xa).toEqual([1,2,3,4,5]);
+    });
+    it("toArray returns array of DoublyLinkedList", function(){
+        dllInsert(3, "t");
+        expect(dll.toArray()).toEqual([1, 2, 3]);
+    });
+    describe("insert(idx, data)", function(){
+        it("throws RangeError when index out of range", function(){
+            expect(()=>{dll.insertIndex(10, 1)}).toThrowError(RangeError, "Index out of Range");
+        });
+        it("adds node at index 0(head) when DoublyLinkedList is empty", function(){
+            dll.insertIndex(0, 1);
+            expect(dll.size).toBe(1);
+            expect(dll.head).toBe(dll.tail);
+            expect(dll.head!.data).toBe(1);
+        });
+        it("adds node at index last(tail)", function(){
+            dllInsert(2, "t");
+            const d = "last";
+            dll.insertIndex(1, d);
+            expect(dll.size).toBe(3);
+            expect(dll.head!.next!.next!.data).toBe(d);
+            expect(dll.tail!.prev!.prev!.data).toBe(1);
+            expect(dll.tail!.data).toBe(d);
+        });
+        it("adds node at index middle", function(){
+            dllInsert(5, "t");
+            dll.insertIndex(2, "middle");
+            expect(dll.size).toBe(6);
+            const curr = [];
+            const prev = [];
+            const next = [];
+            for (const interit of dll) {
+                prev.push(interit.prev?.data);
+                curr.push(interit.current.data);
+                next.push(interit.next?.data);
+            }
+            expect(curr).toEqual([1,2,"middle",3,4,5]);
+            expect(prev).toEqual([undefined,1,2,"middle",3,4]);
+            expect(next).toEqual([2,"middle",3,4,5,undefined]);
+        });
     });
 });

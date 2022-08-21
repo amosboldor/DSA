@@ -30,6 +30,30 @@ class DoublyLinkedList<T = any> extends LinkedList<T, TwoWayNode<T>> {
         this.size++;
     }
 
+    insertIndex(index: number, data: T) {
+        if (index === 0) {
+            // if idx -> first
+            this.insertHead(data);
+        } else if (index >= this.size || index < 0) {
+            throw new RangeError("Index out of Range");
+        } else if (index === this.size - 1) {
+            // if idx -> last
+            this.insertTail(data);
+        } else {
+            // if idx -> middle
+            for (const iterit of this) {
+                if (iterit.idx === index) {
+                    const newNode = new TwoWayNode<T>(data);
+                    newNode.next = iterit.current;
+                    newNode.prev = iterit.prev;
+                    iterit.current.prev = newNode;
+                    iterit.prev!.next = newNode;
+                    this.size++;
+                }
+            }
+        }
+    }
+
     *[Symbol.iterator]() {
         let curNode = this.head;
         let idx = 0;
