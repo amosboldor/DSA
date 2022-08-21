@@ -54,6 +54,42 @@ class DoublyLinkedList<T = any> extends LinkedList<T, TwoWayNode<T>> {
         }
     }
 
+    removeHead(): TwoWayNode<T> {
+        const deleted = this.head;
+        this.ifSizeDelHelper({
+            if2: ()=>{
+                this.head = this.tail;
+                this.head!.prev = null;
+                this.size--;
+            },
+            if3orMr: ()=>{
+                this.head = this.head!.next;
+                this.head!.prev = null;
+                this.size--;
+            }
+        });
+        return deleted!;
+    }
+
+    removeTail(): TwoWayNode<T> {
+        const deleted = this.tail;
+        this.ifSizeDelHelper({
+            if2: ()=>{
+                this.tail = this.head;
+                this.head!.next = null;
+                this.head!.prev = null;
+                this.size--;
+            },
+            if3orMr: ()=>{
+                const tempN = this.tail!.prev;
+                tempN!.next = null;
+                this.tail = tempN;
+                this.size--;
+            }
+        });
+        return deleted!;
+    }
+
     *[Symbol.iterator]() {
         let curNode = this.head;
         let idx = 0;
