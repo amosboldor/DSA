@@ -288,4 +288,30 @@ describe("DoublyLinkedList", function(){
             expect(dll.tail!.prev!.data).toBe(3);
         });
     });
+    describe("atIndex", function(){
+        it("throws error when empty", function(){
+            expect(()=>{dll.atIndex(1)}).toThrowError("DoublyLinkedList is empty");
+        });
+        it("throws RangeError when index out of range", function(){
+            dllInsert(3, "h");
+            expect(()=>{dll.atIndex(10)}).toThrowError(RangeError, "Index out of Range");
+        });
+        it("returns node(head) when index 0", function(){
+            dllInsert(3, "h");
+            const theNode = dll.atIndex(0);
+            expect(theNode.data).toBe(3);
+            expect(dll.head).toBe(theNode);
+        });
+        it("returns node(tail) when last index", function(){
+            dllInsert(3, "h");
+            const theNode = dll.atIndex(2);
+            expect(theNode.data).toBe(1);
+            expect(dll.tail).toBe(theNode);
+        });
+        it("returns node(middle) when index middle", function(){
+            dllInsert(5, "h");
+            const theNode = dll.atIndex(2);
+            expect(theNode.data).toBe(3);
+        });
+    });
 });

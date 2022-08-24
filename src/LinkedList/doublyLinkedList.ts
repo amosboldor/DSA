@@ -158,6 +158,28 @@ class DoublyLinkedList<T = any> extends LinkedList<T, TwoWayNode<T>> {
         return deleted ? Boolean(this.size--) : false;
     }
 
+    atIndex(index: number): TwoWayNode<T> {
+        this.ifEmptyThrow();
+        let nodeAtIdx: TwoWayNode<T>;
+        if (index === 0) {
+            // if idx -> first
+            nodeAtIdx = this.head!;
+        } else if (index >= this.size || index < 0) {
+            throw new RangeError("Index out of Range");
+        } else if (index === this.size - 1) {
+            // if idx -> last
+            nodeAtIdx = this.tail!;
+        } else {
+            // if idx -> middle
+            for (const iterit of this) {
+                if (iterit.idx === index) {
+                    nodeAtIdx = iterit.current;
+                }
+            }
+        }
+        return nodeAtIdx!;
+    }
+
     *[Symbol.iterator]() {
         let curNode = this.head;
         let idx = 0;
