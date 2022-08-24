@@ -90,6 +90,31 @@ class DoublyLinkedList<T = any> extends LinkedList<T, TwoWayNode<T>> {
         return deleted!;
     }
 
+    removeIndex(index: number): TwoWayNode<T> {
+        this.ifEmptyThrow();
+        let deleted: TwoWayNode<T>;
+        if (index === 0) {
+            // if idx -> first
+            deleted = this.removeHead();
+        } else if (index >= this.size || index < 0) {
+            throw new RangeError("Index out of Range");
+        } else if (index === this.size - 1) {
+            // if idx -> last
+            deleted = this.removeTail();
+        } else {
+            // if idx -> middle
+            for (const iterit of this) {
+                if (iterit.idx === index) {
+                    deleted = iterit.current;
+                    iterit.current.next!.prev = iterit.prev;
+                    iterit.prev!.next = iterit.current.next;
+                    this.size--;
+                }
+            }
+        }
+        return deleted!;
+    }
+
     *[Symbol.iterator]() {
         let curNode = this.head;
         let idx = 0;

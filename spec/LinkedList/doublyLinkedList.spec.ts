@@ -178,4 +178,46 @@ describe("DoublyLinkedList", function(){
             expect(dll.tail!.data).toBe(2);
         });
     });
+    describe("removeIndex", function(){
+        it("throws error when empty", function(){
+            expect(()=>{dll.removeIndex(1)}).toThrowError("DoublyLinkedList is empty");
+        });
+        it("throws RangeError when index out of range", function(){
+            dll.insertHead(1);
+            expect(()=>{dll.removeIndex(10)}).toThrowError(RangeError, "Index out of Range");
+        });
+        it("deletes node at index 0(head) when DoublyLinkedList has one node", function(){
+            dllInsert(1, "h");
+            dll.removeIndex(0);
+            expect(dll.size).toBe(0);
+            expect(dll.head).toBe(dll.tail);
+            expect(dll.head).toBe(null);
+        });
+        it("deletes node at index last(tail) when DoublyLinkedList has at least two nodes", function(){
+            dllInsert(3, "t");
+            dll.removeIndex(2);
+            expect(dll.size).toBe(2);
+            expect(dll.head!.data).toBe(1);
+            expect(dll.head!.next!.data).toBe(2);
+            expect(dll.tail!.data).toBe(2);
+            expect(dll.tail!.prev).toBe(dll.head);
+        });
+        it("deletes node at index middle", function(){
+            dllInsert(5, "t");
+            dll.removeIndex(2);
+            expect(dll.size).toBe(4);
+            expect(dll.head!.data).toBe(1);
+            expect(dll.head!.next!.data).toBe(2);
+            expect(dll.head!.next!.next!.data).toBe(4);
+            expect(dll.tail!.data).toBe(5);
+            expect(dll.tail!.prev!.prev!.prev!.data).toBe(1);
+            expect(dll.tail!.prev!.prev!.data).toBe(2);
+            expect(dll.tail!.prev!.data).toBe(4);
+        });
+        it("deletes and returns node at index", function(){
+            dllInsert(7, "h");
+            expect(dll.removeIndex(3).data).toEqual(4);
+            expect(dll.size).toBe(6);
+        });
+    });
 });
