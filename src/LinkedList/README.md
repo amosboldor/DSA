@@ -31,9 +31,11 @@ A linear data structure contains nodes, and each node has a pointer to the next 
 
 ⬆️ Abstract class that all LinkedList types will extend from.
 
-###### GenericNode  = Node or TwoWayNode with gData as data
+###### Key Map
 
-###### GenericData = data of generic type defaulting to any
+GenericNode → Node or TwoWayNode with GenericData as data
+
+GenericData → Data of generic type defaulting to any
 
 | Property | Type                 | Description                        |
 | -------- | -------------------- | ---------------------------------- |
