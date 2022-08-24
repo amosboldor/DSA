@@ -57,12 +57,12 @@ class DoublyLinkedList<T = any> extends LinkedList<T, TwoWayNode<T>> {
     removeHead(): TwoWayNode<T> {
         const deleted = this.head;
         this.ifSizeDelHelper({
-            if2: ()=>{
+            if2: () => {
                 this.head = this.tail;
                 this.head!.prev = null;
                 this.size--;
             },
-            if3orMr: ()=>{
+            if3orMr: () => {
                 this.head = this.head!.next;
                 this.head!.prev = null;
                 this.size--;
@@ -74,13 +74,13 @@ class DoublyLinkedList<T = any> extends LinkedList<T, TwoWayNode<T>> {
     removeTail(): TwoWayNode<T> {
         const deleted = this.tail;
         this.ifSizeDelHelper({
-            if2: ()=>{
+            if2: () => {
                 this.tail = this.head;
                 this.head!.next = null;
                 this.head!.prev = null;
                 this.size--;
             },
-            if3orMr: ()=>{
+            if3orMr: () => {
                 const tempN = this.tail!.prev;
                 tempN!.next = null;
                 this.tail = tempN;
@@ -119,7 +119,7 @@ class DoublyLinkedList<T = any> extends LinkedList<T, TwoWayNode<T>> {
         const existsContainsData = (node: Nullable<TwoWayNode<T>>) => node && node.data === data;
         let deleted = this.ifSizeDelHelper({
             data: data,
-            if2: ()=>{
+            if2: () => {
                 if (existsContainsData(this.head)) {
                     this.head = this.tail;
                     this.head!.next = this.head!.prev = null;
@@ -131,7 +131,7 @@ class DoublyLinkedList<T = any> extends LinkedList<T, TwoWayNode<T>> {
                 }
                 return false;
             },
-            if3orMr: ()=>{
+            if3orMr: () => {
                 if (existsContainsData(this.head)) {
                     this.head = this.head!.next;
                     this.head!.prev = null;

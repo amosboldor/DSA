@@ -16,14 +16,19 @@ interface IfSizeDelHelperParam<T> {
     if3orMr?: Function | null
 }
 
-abstract class LinkedList<T, TNODE extends { next: Nullable<TwoWayNode<T> | Node<T>>, prev?: Nullable<TwoWayNode<T> | Node<T>>, data: T }> {
+abstract class LinkedList<T, TNODE extends { 
+    next: Nullable<TwoWayNode<T> | Node<T>>,
+    prev?: Nullable<TwoWayNode<T> | Node<T>>,
+    data: T 
+}> {
+
     public size: number = 0;
     public head: Nullable<TNODE> = null;
     public tail: Nullable<TNODE> = null;
 
-    protected ifSizeDelHelper({data, if2, if3orMr}: IfSizeDelHelperParam<T>): boolean {
+    protected ifSizeDelHelper({ data, if2, if3orMr }: IfSizeDelHelperParam<T>): boolean {
         this.ifEmptyThrow();
-        if(this.size === 1) {
+        if (this.size === 1) {
             if (data) {
                 if (this.head!.data === data) {
                     this.head = this.tail = null;

@@ -52,11 +52,11 @@ class SinglyLinkedList<T = any> extends LinkedList<T, Node<T>> {
     removeHead(): Node<T> {
         const deleted = this.head;
         this.ifSizeDelHelper({
-            if2: ()=>{
+            if2: () => {
                 this.head = this.tail;
                 this.size--;
             },
-            if3orMr: ()=>{
+            if3orMr: () => {
                 this.head = this.head!.next;
                 this.size--;
             }
@@ -67,12 +67,12 @@ class SinglyLinkedList<T = any> extends LinkedList<T, Node<T>> {
     removeTail(): Node<T> {
         const deleted = this.tail;
         this.ifSizeDelHelper({
-            if2: ()=>{
+            if2: () => {
                 this.head!.next = null;
                 this.tail = this.head;
                 this.size--;
             },
-            if3orMr: ()=>{
+            if3orMr: () => {
                 for (const iterit of this) {
                     let node = iterit.current;
                     if (node.next === this.tail) {
@@ -114,7 +114,7 @@ class SinglyLinkedList<T = any> extends LinkedList<T, Node<T>> {
         const existsContainsData = (node: Nullable<Node<T>>) => node && node.data === data;
         let deleted = this.ifSizeDelHelper({
             data: data,
-            if2: ()=>{
+            if2: () => {
                 if (existsContainsData(this.head)) {
                     this.head = this.tail;
                     return true;
@@ -124,7 +124,7 @@ class SinglyLinkedList<T = any> extends LinkedList<T, Node<T>> {
                 }
                 return false;
             },
-            if3orMr: ()=>{
+            if3orMr: () => {
                 if (existsContainsData(this.head)) {
                     this.head = this.head!.next;
                     return true;
