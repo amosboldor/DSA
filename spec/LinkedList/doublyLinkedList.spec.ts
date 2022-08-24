@@ -314,4 +314,22 @@ describe("DoublyLinkedList", function(){
             expect(theNode.data).toBe(3);
         });
     });
+    describe("getIndexOf", function(){
+        it("throws error when empty", function(){
+            expect(()=>{dll.getIndexOf(5)}).toThrowError("DoublyLinkedList is empty");
+        });
+        it("returns index -1 not in DoublyLinkedList", function(){
+            dllInsert(7, "h");
+            expect(dll.getIndexOf(8)).toBe(-1);
+        });
+        it("returns index when in DoublyLinkedList",function(){
+            dllInsert(7, "h");
+            expect(dll.getIndexOf(5)).toBe(2);
+            expect(dll.getIndexOf(3)).toBe(4);
+        });
+    });
+    it("toArray returns array of DoublyLinkedList", function(){
+        dllInsert(3, "t");
+        expect(dll.toArray()).toEqual([1, 2, 3]);
+    });
 });

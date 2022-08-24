@@ -65,6 +65,39 @@ abstract class LinkedList<T, TNODE extends { next: Nullable<TwoWayNode<T> | Node
         }
         return LinkedListArray;
     }
+
+    atIndex(index: number): TNODE {
+        this.ifEmptyThrow();
+        let nodeAtIdx: TNODE;
+        if (index === 0) {
+            // if idx -> first
+            nodeAtIdx = this.head!;
+        } else if (index >= this.size || index < 0) {
+            throw new RangeError("Index out of Range");
+        } else if (index === this.size - 1) {
+            // if idx -> last
+            nodeAtIdx = this.tail!;
+        } else {
+            // if idx -> middle
+            for (const iterit of this) {
+                if (iterit.idx === index) {
+                    nodeAtIdx = iterit.current;
+                }
+            }
+        }
+        return nodeAtIdx!;
+    }
+
+    getIndexOf(data: T): number {
+        this.ifEmptyThrow();
+        let found = -1;
+        for (const iterit of this) {
+            if (iterit.current.data === data) {
+                found = iterit.idx;
+            }
+        }
+        return found;
+    }
 }
 
 export { Nullable, Node, TwoWayNode, LinkedList }
