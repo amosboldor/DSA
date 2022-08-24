@@ -1,4 +1,4 @@
-import { TwoWayNode, LinkedList } from "./LinkedList";
+import { Nullable, TwoWayNode, LinkedList } from "./LinkedList";
 
 class DoublyLinkedList<T = any> extends LinkedList<T, TwoWayNode<T>> {
 
@@ -113,6 +113,49 @@ class DoublyLinkedList<T = any> extends LinkedList<T, TwoWayNode<T>> {
             }
         }
         return deleted!;
+    }
+
+    findDelete(data: T): boolean {
+        const existsContainsData = (node: Nullable<TwoWayNode<T>>) => node && node.data === data;
+        let deleted = this.ifSizeDelHelper({
+            data: data,
+            if2: ()=>{
+                if (existsContainsData(this.head)) {
+                    this.head = this.tail;
+                    this.head!.next = this.head!.prev = null;
+                    return true;
+                } else if (existsContainsData(this.tail)) {
+                    this.tail = this.head;
+                    this.tail!.next = this.tail!.prev = null;
+                    return true;
+                }
+                return false;
+            },
+            if3orMr: ()=>{
+                if (existsContainsData(this.head)) {
+                    this.head = this.head!.next;
+                    this.head!.prev = null;
+                    return true;
+                } else {
+                    for (const iterit of this) {
+                        if (existsContainsData(iterit.current)) {
+                            if (iterit.current === this.tail) {
+                                this.tail!.prev = null;
+                                iterit.prev!.next = null;
+                                this.tail = iterit.prev;
+                            } else {
+                                iterit.current.next = iterit.current.prev = null;
+                                iterit.prev!.next = iterit.next;
+                                iterit.next!.prev = iterit.prev;
+                            }
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+        return deleted ? Boolean(this.size--) : false;
     }
 
     *[Symbol.iterator]() {

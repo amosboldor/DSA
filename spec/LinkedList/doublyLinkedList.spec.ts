@@ -220,4 +220,72 @@ describe("DoublyLinkedList", function(){
             expect(dll.size).toBe(6);
         });
     });
+    describe("findDelete", function(){
+        it("throws error when empty", function(){
+            expect(()=>{dll.findDelete(1)}).toThrowError("DoublyLinkedList is empty");
+        });
+        it("deletes node(head/tail) when only one node exist", function(){
+            dll.insertHead(1);
+            expect(dll.findDelete(1)).toBeTrue();
+            expect(dll.head).toBeNull();
+            expect(dll.tail).toBeNull();
+            expect(dll.size).toBe(0);
+        });
+        it("deletes node(head) when only two node exist", function(){
+            dllInsert(2, "h");
+            expect(dll.findDelete(2)).toBeTrue();
+            expect(dll.head).toBeTruthy();
+            expect(dll.tail).toBeTruthy();
+            expect(dll.head).toBe(dll.tail);
+            expect(dll.head!.data).toBe(1);
+            expect(dll.head!.prev).toBeNull();
+            expect(dll.head!.next).toBeNull();
+            expect(dll.size).toBe(1);
+        });
+        it("deletes node(tail) when only two node exist", function(){
+            dllInsert(2, "h");
+            expect(dll.findDelete(1)).toBeTrue();
+            expect(dll.head).toBeTruthy();
+            expect(dll.tail).toBeTruthy();
+            expect(dll.head).toBe(dll.tail)
+            expect(dll.head!.data).toBe(2);
+            expect(dll.tail!.prev).toBeNull();
+            expect(dll.tail!.next).toBeNull();
+            expect(dll.size).toBe(1);
+        });
+        it("returns false when doesn't find data to delete with size 2", function(){
+            dllInsert(2, "h");
+            expect(dll.size).toBe(2);
+            expect(dll.findDelete(6)).toBeFalse();
+            expect(dll.size).toBe(2);
+        });
+        it("returns false when doesn't find data to delete with size 3 or more", function(){
+            dllInsert(6, "h");
+            expect(dll.size).toBe(6);
+            expect(dll.findDelete(9)).toBeFalse();
+            expect(dll.size).toBe(6);
+        });
+        it("deletes node(head) when three or more nodes exist", function(){
+            dllInsert(5, "h");
+            expect(dll.findDelete(5)).toBeTrue();
+            expect(dll.head!.data).toBe(4);
+            expect(dll.head!.prev).toBeNull();
+            expect(dll.head!.next!.data).toBe(3);
+            expect(dll.head!.next!.prev).toBe(dll.head);
+        });
+        it("deletes node(middle) when three or more nodes exist", function(){
+            dllInsert(5, "h");
+            expect(dll.findDelete(3)).toBeTrue();
+            expect(dll.size).toBe(4);
+            expect(dll.tail!.prev!.prev!.prev?.data).toBe(dll.head!.data);
+            expect(dll.head!.next!.next!.next!.data).toBe(dll.tail!.data);
+        });
+        it("deletes node(tail) when three or more nodes exist", function(){
+            dllInsert(5, "h");
+            expect(dll.findDelete(1)).toBeTrue();
+            expect(dll.tail!.next).toBeNull();
+            expect(dll.tail!.data).toBe(2);
+            expect(dll.tail!.prev!.data).toBe(3);
+        });
+    });
 });
