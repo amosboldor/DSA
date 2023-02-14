@@ -1,4 +1,4 @@
-import charCount from "../src/characterCountString";
+import charCount from "../src/other/characterCountString";
 
 describe("charCount returns a Map of tally of each character in the string given", function() {
     it("charCount returns a Map", function(){

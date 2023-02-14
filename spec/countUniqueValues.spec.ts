@@ -1,4 +1,4 @@
- import countUniqueValues from "../src/countUniqueValues";
+ import countUniqueValues from "../src/other/countUniqueValues";
 
  describe("countUniqueValues returns the number of unique values", function(){
     it("countUniqueValues returns 0 given []", function(){

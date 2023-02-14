@@ -1,4 +1,4 @@
-import sameFrequency from "../src/sameFrequency";
+import sameFrequency from "../src/other/sameFrequency";
 
 describe("sameFrequency returns the two numbers have the same frequency of digits", function(){
     it("sameFrequency(112, 211) returns true", function(){

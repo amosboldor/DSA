@@ -1,1 +1,4 @@
 # DSA
+This repository is a personal project where I implement various **_data structures and algorithms_** to deepen my understanding of computer science fundamentals and improve my problem-solving skills. Through this ongoing effort, I aim to hone my ability to think critically and creatively when faced with complex programming challenges. The code in this repository is not intended for production use but rather as a learning tool to explore and experiment with different data structures and algorithms. By continually adding to and updating this repository, I aim to stay up to date on the latest techniques and best practices in the field of computer science.
+
+I also get to hone my TypeScript skills.

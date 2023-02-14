@@ -1,4 +1,4 @@
- import binarySearch from "../src/binarySearch";
+ import binarySearch from "../src/searching/binarySearch";
 
  describe("binarySearch returns index of given (num) from given array", function(){
     const sortedArr = [8, 9, 9, 18, 21, 25, 27, 33, 34, 38, 40, 48, 55, 57, 63, 69, 73, 78, 85, 99];

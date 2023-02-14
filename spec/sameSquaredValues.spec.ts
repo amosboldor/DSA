@@ -1,4 +1,4 @@
-import same from "../src/sameSquaredValues";
+import same from "../src/other/sameSquaredValues";
 
 describe("Tests for sameSquaredValues same()", function(){
     it("same returns true given same values/frequency", function(){

@@ -1,4 +1,4 @@
- import sumZero from "../src/sumZero";
+ import sumZero from "../src/other/sumZero";
 
  describe("Testing subZero", function(){
     it("subZero returns undefined given [1,2,3]", function(){

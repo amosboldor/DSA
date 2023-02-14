@@ -1,4 +1,4 @@
-import validAnagram from "../src/anagrams";
+import validAnagram from "../src/other/anagrams";
 
 describe("validAnagram returns true if both strings given are anagrams of each other", function(){
     it("validAnagram(\"aaz\", \"zza\") = false", function(){

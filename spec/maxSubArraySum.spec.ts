@@ -1,4 +1,4 @@
-import maxSubArraySum from "../src/maxSubArraySum";
+import maxSubArraySum from "../src/other/maxSubArraySum";
 
 describe("maxSubArraySum calculates the maximum sum of (n) consecutive elements in array", function(){
     it("maxSubArraySum([1, 2, 5, 2, 8, 1, 5], 2) returns 10", function(){
